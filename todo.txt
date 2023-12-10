@@ -1,0 +1,17 @@
+- load levelupstate items properly - DONE
+- fix menu options staying on screen in next state - DONE
+- stop player going off screen during boss fight - DONE
+- show boss health bar - DONE
+- allow user to remap keys - DONE
+- fix enemy animations to face player - DONE
+
+- fix menu buttons - DONE
+- show menu navigation keys
+- fix invisible walls
+- add boss key
+
+- add laser and wand levelling up
+- add pickups
+- fix time skipping on levelupstate
+- add tooltips on save score state
+- move boss attack states into their attacks file
