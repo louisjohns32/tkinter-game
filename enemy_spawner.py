@@ -38,6 +38,7 @@ class enemy_spawner:
                   23: {},
                   "boss": {Boss: 1}
                   }
+    wave_1_map = {"boss" : {DragonBoss : 1}}
 
     wave_2_map = {
         0: {},

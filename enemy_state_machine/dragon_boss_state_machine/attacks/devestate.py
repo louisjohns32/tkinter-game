@@ -12,7 +12,6 @@ class Devestate(BossBaseAttack):
         return state_factory.devestate(enemy)
 
 
-# TODO IMPLEMENT min distance, max dinstance FOR ATTACKS TO BE CHECKED IN FINGING ATTACK STATE
 class DevestateState(EnemyBaseState):
   #  duration = 3
    # spread = 40 #breath spread in degrees

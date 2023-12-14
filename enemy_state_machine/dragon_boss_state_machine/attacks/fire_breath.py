@@ -11,6 +11,9 @@ from Window import Window
 class FireBreath(BossBaseAttack):
     cooldown = 7
 
+    min_distance = 0
+    max_distance = 300
+
     def attack(self, state_factory, enemy):
         self.last_shot = time()
         return state_factory.fireBreath(enemy)
@@ -19,8 +22,8 @@ class FireBreath(BossBaseAttack):
 class FireBreathState(EnemyBaseState):
     duration = 3
     spread = 40  # breath spread in degrees
-    max_distance = 400  # breath distance
-    damage = 10
+    breath_distance = 400  # breath distance
+    damage = 100
 
     def enter_state(self):
         self.start_time = time()
@@ -51,7 +54,7 @@ class FireBreathState(EnemyBaseState):
         if abs(self.direction - angle_toplayer) < self.spread/2:
             player_distance = sqrt(
                 (player_pos[0] - self.enemy.x_pos)**2 + (player_pos[1] - self.enemy.y_pos)**2)
-            if player_distance <= self.max_distance:
+            if player_distance <= self.breath_distance:
                 self.enemy.player.take_damage(
                     self.damage * Window.delta_time)
 

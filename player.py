@@ -11,6 +11,9 @@ from Window import Window
 
 
 class Player(GameObject):
+
+    instance = None
+
     max_health = 200
     collidable = True
     radius = 32
@@ -29,6 +32,8 @@ class Player(GameObject):
                  "Shotgun": Shotgun, "Orbitors": Orbitors, "Laser": Laser, "Shuriken" : Shuriken}
 
     def __init__(self, input_handler, sprite, collision_manager, obj_manager, state_manager):
+        Player.instance = self
+
         super().__init__(sprite, collision_manager=collision_manager)
         self.input_handler = input_handler
         self.obj_manager = obj_manager
