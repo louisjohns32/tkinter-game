@@ -11,6 +11,7 @@ class collision_manager:
         self.state_manager = state_manager
 
     def check_collision_wall(self, x, y, radius, return_coords=False):
+        radius *= Window.SCALE
         # Convert x,y from world coordinates to map coordinates
         x = int(x//self.TILE_SIZE)
         y = int(y//self.TILE_SIZE)
@@ -31,6 +32,7 @@ class collision_manager:
         return True
 
     def check_collision_objects(self, x, y, radius, tag=""):
+        radius *= Window.SCALE
         # check against other objects - can be optimised further in future, instead of looping through all objects
         for obj in self.collidable_objects:
 
@@ -48,6 +50,7 @@ class collision_manager:
         return True
 
     def check_collision_line(self, x, y, angle=0, width=1):
+        width *= Window.SCALE
         # checks collision along line at given angle from x,y with given width
         collided_objs = []
         for obj in self.collidable_objects:

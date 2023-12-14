@@ -26,6 +26,37 @@ class Enemy(GameObject):
     tag = "enemy"
     type = "Enemy"
 
+    instances = {}
+    available_instances = {} # enemy type -> instances list
+
+    
+
+    def __new__(cls, *args, **kwargs):
+        try:
+            if cls.available_instances[cls]:
+                print("REUSING INSTANCE")
+                obj = cls.available_instances[cls].pop()
+                obj.__init__(*args, **kwargs)
+                return obj
+            else:
+                # create new instance
+                obj = super().__new__(cls)
+                cls.instances[cls].append(obj)
+                print(len(cls.instances))
+                return obj
+        except:
+            # create new instance
+            obj = super().__new__(cls)
+            cls.instances[cls] = [obj]
+            cls.available_instances[cls] = []
+            return obj
+
+        
+            
+        
+         
+
+
     def __init__(self, sprite, player_ref, pos=(0, 0), collision_manager=None):
         super().__init__(sprite, pos=pos, collision_manager=collision_manager)
         self.player = player_ref
@@ -37,6 +68,9 @@ class Enemy(GameObject):
     def die(self):
         self.health = 0
         self.current_state.change_state(self.state_factory.dead(self))
+    
+    def deactivate(self):
+        self.available_instances[type(self)].append(self)
 
     def take_damage(self, dmg):
         self.health -= dmg

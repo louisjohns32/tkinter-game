@@ -15,6 +15,7 @@ class Boss(Enemy):
     # TODO Change how attacks are managed. Take inspiration from how i did it in soulsgame? i.e Attack objects with criteria to be met and pick a random available attack in findingAttackState]
     ATTACKS = [Charge()]
 
+
     def __init__(self, sprite, player_ref, pos=..., collision_manager=None):
         super().__init__(sprite, player_ref, pos, collision_manager)
         self.state_factory = BossStateFactory()

@@ -30,6 +30,7 @@ def start_game():
     map_manager = MapManager()
     state_manager = GameStateManager(
         map_manager=map_manager, input_handler=input_handler, main_canvas=main_canvas)
+
     
     
 
@@ -48,6 +49,7 @@ root.resizable(width=False, height=False)
 WIDTH = root.winfo_screenwidth()
 HEIGHT = root.winfo_screenheight()
 SCALE = sqrt((WIDTH*HEIGHT)/(1920*1080))
+print("HELLO", end = " ! ")
 
 window = Window()
 Window.HEIGHT = HEIGHT

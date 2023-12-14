@@ -33,8 +33,8 @@ class EnemyDeadState(EnemyBaseState):
         if abs(x) < 80 and abs(y) < 80:
             self.enemy.player.increaseXP(self.enemy.xp_on_pickup)
             self.enemy.player.obj_manager.delete_object(self.enemy)
-            del self  # TODO Super messy, maybe change???
+            self.enemy.deactivate() # TODO MOVE THIS!!!!!!
 
         elif time() > self.start_time + self.del_time:
             self.enemy.player.obj_manager.delete_object(self.enemy)
-            del self
+            self.enemy.deactivate() # TODO MOVE THIS!!!
