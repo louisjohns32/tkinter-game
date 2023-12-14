@@ -6,15 +6,7 @@ from animation import Animation
 
 class Boss(Enemy):
     max_health = 500
-    health = max_health
-    walking_right_anim = Animation(
-        "cyberpunk-pack/skeleton-walk.png", (16, 22), 6, scale=8, time=64)
-    walking_left_anim = Animation(
-        "cyberpunk-pack/skeleton-walk.png", (16, 22), 6, scale=8, time=64, mirror=True)
-    idle_right_anim = Animation(
-        "cyberpunk-pack/skeleton-walk.png", (16, 22), 6, scale=8, time=64)
-    idle_left_anim = Animation(
-        "cyberpunk-pack/skeleton-walk.png", (16, 22), 6, scale=8, time=64, mirror=True)
+    
 
     radius = 100
 
@@ -28,6 +20,15 @@ class Boss(Enemy):
         self.state_factory = BossStateFactory()
         self.current_state = self.state_factory.phase1(self)
         self.current_state.enter_state()
+        self.health = self.max_health
+        self.walking_right_anim = Animation(
+                "cyberpunk-pack/skeleton-walk.png", (16, 22), 6, scale=8, time=64)
+        self.walking_left_anim = Animation(
+            "cyberpunk-pack/skeleton-walk.png", (16, 22), 6, scale=8, time=64, mirror=True)
+        self.idle_right_anim = Animation(
+            "cyberpunk-pack/skeleton-walk.png", (16, 22), 6, scale=8, time=64)
+        self.idle_left_anim = Animation(
+            "cyberpunk-pack/skeleton-walk.png", (16, 22), 6, scale=8, time=64, mirror=True)
 
     def update(self):
         super().update()

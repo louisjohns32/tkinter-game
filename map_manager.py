@@ -1,4 +1,5 @@
 from PIL import ImageTk, Image
+from Window import Window
 
 
 class MapManager:
@@ -6,6 +7,7 @@ class MapManager:
     MAP_ARRAY = []
 
     def __init__(self):
+        self.TILE_SIZE = self.TILE_SIZE * Window.SCALE
         img = Image.open("assets/stone-wall.png").resize((128,
                                                           128), resample=Image.NEAREST)
         self.TEXTURE_MAP = {255: ImageTk.PhotoImage(

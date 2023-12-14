@@ -2,6 +2,7 @@ from items.player_weapon import PlayerWeapon
 import math
 from projectiles.laser_projectile import LaserProjectile
 from time import time
+from Window import Window
 
 
 class Laser(PlayerWeapon):
@@ -30,7 +31,7 @@ class Laser(PlayerWeapon):
         mouse_x, mouse_y = self.player.input_handler.get_mouse_pos()
         # get direction to mouse pos
         # TODO Get rid of magic numbers
-        direction = math.atan2(mouse_y - 1080/2, mouse_x - 1920/2)
+        direction = math.atan2(mouse_y - Window.HEIGHT/2, mouse_x - Window.WIDTH/2)
 
         self.player.obj_manager.new_object(LaserProjectile(
             (self.player.x_pos, self.player.y_pos), direction, self.player, self.projectile_sprite, 3))

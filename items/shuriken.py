@@ -4,6 +4,7 @@ from animation import Animation
 from time import time
 import math
 from projectiles.shuriken_projectile import ShurikenProjectile
+from Window import Window
 
 
 class Shuriken(PlayerWeapon):
@@ -38,7 +39,7 @@ class Shuriken(PlayerWeapon):
             camera_pos[0], self.player.y_pos - camera_pos[1]
         # TODO Get rid of magic numbers
         direction = math.atan2(
-            mouse_y - (deviance[1] + 1080/2), mouse_x - (deviance[0] + 1920/2))
+            mouse_y - (deviance[1] + Window.HEIGHT/2), mouse_x - (deviance[0] + Window.WIDTH/2))
         for i in range(projectiles):
             direction = direction + i*math.radians(360)/projectiles
             self.player.obj_manager.new_object(ShurikenProjectile((self.player.x_pos - i, self.player.y_pos - i), direction, self.player,

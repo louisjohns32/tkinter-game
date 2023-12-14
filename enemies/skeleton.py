@@ -3,18 +3,21 @@ from animation import Animation
 
 
 class Skeleton(Enemy):
-    walking_right_anim = Animation(
+    def __init__(self, sprite, player_ref, pos=(0,0), collision_manager=None):
+        super().__init__(sprite, player_ref, pos, collision_manager)
+
+        self.walking_right_anim = Animation(
         "cyberpunk-pack/skeleton-walk.png", (16, 22), 6, scale=4, time=64)
-    walking_left_anim = Animation(
+        self.walking_left_anim = Animation(
         "cyberpunk-pack/skeleton-walk.png", (16, 22), 6, scale=4, time=64, mirror=True)
-    idle_right_anim = Animation(
+        self.idle_right_anim = Animation(
         "cyberpunk-pack/skeleton-walk.png", (16, 22), 6, scale=4, time=64)
-    idle_left_anim = Animation(
+        self.idle_left_anim = Animation(
         "cyberpunk-pack/skeleton-walk.png", (16, 22), 6, scale=4, time=64, mirror=True)
 
-    speed = 1.5
-    damage = 5
-    max_health = 20
-    health = max_health
+        self.speed = 1.5
+        self.damage = 5
+        self.max_health = 20
+        self.health = self.max_health
 
     type = "Skeleton"

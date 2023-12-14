@@ -3,6 +3,7 @@ from time import time
 from projectiles.projectile import Projectile
 import math
 from PIL import Image, ImageTk
+from Window import Window
 
 
 class PlayerWeapon(PlayerItem):
@@ -42,7 +43,7 @@ class PlayerWeapon(PlayerItem):
             camera_pos[0], self.player.y_pos - camera_pos[1]
         # TODO Get rid of magic numbers
         direction = math.atan2(
-            mouse_y - (deviance[1] + 1080/2), mouse_x - (deviance[0] + 1920/2))
+            mouse_y - (deviance[1] + Window.HEIGHT/2), mouse_x - (deviance[0] + Window.WIDTH/2))
         for i in range(projectiles):
             self.player.obj_manager.new_object(Projectile((self.player.x_pos - i, self.player.y_pos - i), direction, self.player,
                                               sprite=self.projectile_sprite, duration=self.duration, speed=self.speed, penetrate=self.penetrate, damage=self.damage, target="enemy"))

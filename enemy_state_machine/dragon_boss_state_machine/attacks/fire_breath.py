@@ -65,16 +65,18 @@ class FireBreathState(EnemyBaseState):
 
 
 class FireBreathProjectile(GameObject):
-    animations = {
+    
+
+    def __init__(self, sprite, pos=(0, 0), dir="left"):
+        super().__init__(sprite, pos=pos)
+        self.animations = {
         "left": Animation("cyberpunk-pack/fire-breath.png", (64, 64), 9, time=16, scale=5, rotation=270),
         "right": Animation("cyberpunk-pack/fire-breath.png", (64, 64), 9, time=16, scale=5, rotation=90),
         "up": Animation("cyberpunk-pack/fire-breath.png", (64, 64), 9, time=16, scale=5, rotation=180),
         "down": Animation("cyberpunk-pack/fire-breath.png", (64, 64), 9, time=16, scale=5)
     }
-
-    def __init__(self, sprite, pos=(0, 0), dir="left"):
-        super().__init__(sprite, pos=pos)
         self.active_anim = self.animations[dir]
+
 
     def update(self):
         self.active_anim.update()

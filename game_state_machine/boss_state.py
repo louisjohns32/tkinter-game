@@ -1,4 +1,5 @@
 from game_state_machine.game_base_state import GameBaseState
+from Window import Window
 
 
 class BossState(GameBaseState):
@@ -21,9 +22,9 @@ class BossState(GameBaseState):
     def update_state(self):
         # update boss healthbar
         self.state_manager.main_canvas.create_rectangle(
-            1920/2-400, 0, 1920/2 + 400, 100, fill="black")
+            Window.WIDTH/2-400, 0, Window.WIDTH/2 + 400, 100, fill="black")
         self.state_manager.main_canvas.create_rectangle(
-            1920/2-400, 0, (1920/2 - 400 + 800*(self.boss.health/self.boss.max_health)), 100, fill="red")
+            Window.WIDTH/2-400, 0, (Window.WIDTH/2 - 400 + 800*(self.boss.health/self.boss.max_health)), 100, fill="red")
 
     def check_switch_states(self):
         # check if boss is dead

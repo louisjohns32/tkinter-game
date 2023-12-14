@@ -1,8 +1,12 @@
 from PIL import Image, ImageTk
 import time as Time
+from Window import Window
 
 class Animation:
     def __init__(self, spritesheet_path: str, res: tuple, sprites: int, time=50, scale=1, mirror=False, start=0, end=-1, rotation=0, spin=False):
+        # add scaling based off window size
+        scale *= Window.SCALE
+        print(f"Initing animation with path {spritesheet_path}")
         # time is in ms
         self.sprites = [] # holds all sprites related to animation
          # load spritesheet

@@ -1,5 +1,6 @@
 from game_state_machine.game_base_state import GameBaseState
 from PIL import Image, ImageTk
+from Window import Window
 
 
 class MainMenuState(GameBaseState):
@@ -13,9 +14,9 @@ class MainMenuState(GameBaseState):
     def enter_state(self):
         # draw background
         self.bg = ImageTk.PhotoImage(Image.open(
-            "assets/menu-bg.jpg").resize((1920, 1080)))
+            "assets/menu-bg.jpg").resize((Window.WIDTH, Window.HEIGHT)))
         self.state_manager.main_canvas.create_image(
-            1920/2, 1080/2, image=self.bg)
+            Window.WIDTH/2, Window.HEIGHT/2, image=self.bg)
 
         # Reset game
         self.state_manager.PLAYING.reset()

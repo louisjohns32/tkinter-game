@@ -10,7 +10,7 @@ class BossKeyState(GameBaseState):
     def enter_state(self):
         # draw bosskey image
         self.state_manager.main_canvas.create_image(
-            1920/2, 1080/2, image=self.bosskey_img, tag="bosskey")
+            Window.WIDTH/2, Window.HEIGHT/2, image=self.bosskey_img, tag="bosskey")
 
     def exit_state(self):
         # delete bosskey image

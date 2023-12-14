@@ -30,7 +30,7 @@ class SaveScoreState(GameBaseState):
                             self.save_score()
                         else:
                             self.state_manager.main_canvas.create_text(
-                                300, 1920/2, text="Name must be 3 characters or longer")
+                                300, Window.WIDTH/2, text="Name must be 3 characters or longer")
                     elif len(self.name) < 12:
                         self.name += char
                     self.input_dict[char] = True
@@ -45,11 +45,11 @@ class SaveScoreState(GameBaseState):
     def render(self):
         self.state_manager.main_canvas.delete("del")
         self.state_manager.main_canvas.create_rectangle(
-            1920/2-200, 150, 1920/2+200, 250, fill="white", tag="del")
+            Window.WIDTH/2-200, 150, Window.WIDTH/2+200, 250, fill="white", tag="del")
         self.state_manager.main_canvas.create_text(
-            1920/2, 200, text=self.name, tag="del", font="Arial, 30")
+            Window.WIDTH/2, 200, text=self.name, tag="del", font="Arial, 30")
         self.state_manager.main_canvas.create_text(
-            1920/2, 100, text="Enter name and press return to save", font="Arial, 30", tag="del")
+            Window.WIDTH/2, 100, text="Enter name and press return to save", font="Arial, 30", tag="del")
 
     def save_score(self):
         try:

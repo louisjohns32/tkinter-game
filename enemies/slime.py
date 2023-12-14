@@ -3,16 +3,19 @@ from animation import Animation
 
 
 class Slime(Enemy):
-    walking_right_anim = Animation(
+    def __init__(self, sprite, player_ref, pos=(0,0), collision_manager=None):
+        super().__init__(sprite, player_ref, pos, collision_manager)
+
+        self.walking_right_anim = Animation(
         "cyberpunk-pack/slime.png", (8, 6), 2, scale=8, time=100)
-    walking_left_anim = Animation(
+        self.walking_left_anim = Animation(
         "cyberpunk-pack/slime.png", (8, 6), 2, scale=8, time=100, mirror=True)
-    idle_left_anim = Animation(
+        self.idle_left_anim = Animation(
         "cyberpunk-pack/slime.png", (8, 6), 2, scale=8, time=100)
-    idle_right_anim = Animation(
+        self.idle_right_anim = Animation(
         "cyberpunk-pack/slime.png", (8, 6), 2, scale=8, time=100, mirror=True)
-    speed = 2
-    max_health = 10
-    health = max_health
+        self.speed = 2
+        self.max_health = 10
+        self.health = self.max_health
 
     type = "Slime"

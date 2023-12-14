@@ -14,7 +14,7 @@ class LaserProjectile(Projectile):
         self.charge_time = 1 # TODO pass in as item attribute
         self.width = width
         self.spritePIL = Image.open(
-            "assets/projectiles/laser.png").resize((1920, width), resample=Image.NEAREST)
+            "assets/projectiles/laser.png").resize((Window.WIDTH, width), resample=Image.NEAREST)
         self.sprite = ImageTk.PhotoImage(self.spritePIL)
 
     def update(self):
@@ -22,7 +22,7 @@ class LaserProjectile(Projectile):
         mouse_x, mouse_y = self.player.input_handler.get_mouse_pos()
         # get direction to mouse pos
         # TODO Get rid of magic numbers
-        direction = math.atan2(mouse_y - 1080/2, mouse_x - 1920/2)
+        direction = math.atan2(mouse_y - Window.HEIGHT/2, mouse_x - Window.WIDTH/2)
 
        # set sprite alpha
 
@@ -40,7 +40,7 @@ class LaserProjectile(Projectile):
         mouse_x, mouse_y = self.player.input_handler.get_mouse_pos()
         # get direction to mouse pos
         # TODO Get rid of magic numbers
-        direction = math.atan2(mouse_y - 1080/2, mouse_x - 1920/2)
+        direction = math.atan2(mouse_y - Window.HEIGHT/2, mouse_x - Window.WIDTH/2)
 
         for obj in self.player.collision_manager.check_collision_line(self.x_pos, self.y_pos, width=self.width, angle=direction):
             try:

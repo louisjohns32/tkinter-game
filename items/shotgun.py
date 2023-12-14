@@ -3,6 +3,7 @@ from PIL import ImageTk, Image
 from time import time
 import math
 from projectiles.projectile import Projectile
+from Window import Window
 
 
 class Shotgun(PlayerWeapon):
@@ -37,7 +38,7 @@ class Shotgun(PlayerWeapon):
             camera_pos[0], self.player.y_pos - camera_pos[1]
         # TODO Get rid of magic numbers
         direction = math.atan2(
-            mouse_y - (deviance[1] + 1080/2), mouse_x - (deviance[0] + 1920/2))
+            mouse_y - (deviance[1] + Window.HEIGHT/2), mouse_x - (deviance[0] + Window.WIDTH/2))
 
         for i in range(projectiles):
 

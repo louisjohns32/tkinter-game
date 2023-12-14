@@ -42,6 +42,6 @@ class OptionsState(GameBaseState):
             else:
                 color = "black"
             self.state_manager.main_canvas.create_text(
-                1920/2, 300 + i*50, font="Arial, 20", text=bind, tag="del")
+                Window.WIDTH/2, 300 + i*50, font="Arial, 20", text=bind, tag="del")
             self.state_manager.main_canvas.create_text(
-                1920/2 + 200, 300 + i*50, font="Arial, 20", text=self.binds_dict[bind], tag="del", fill=color)
+                Window.WIDTH/2 + 200, 300 + i*50, font="Arial, 20", text=self.binds_dict[bind], tag="del", fill=color)

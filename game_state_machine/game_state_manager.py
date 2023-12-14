@@ -17,6 +17,7 @@ from time import time
 
 class GameStateManager:
     def __init__(self, map_manager=None, input_handler=None, main_canvas=None):
+        print("GAME STATE INIT")
         self.map_manager = map_manager
         self.input_handler = input_handler
         self.main_canvas = main_canvas

@@ -35,12 +35,12 @@ class ChangingBindState(GameBaseState):
         for i, bind in enumerate(self.binds_dict):
             if bind == self.action:
                 self.state_manager.main_canvas.create_text(
-                    1920/2 + 200, 300 + i*50, font="Arial, 20", text="Type key to bind", tag="del", fill="blue")
+                    Window.WIDTH/2 + 200, 300 + i*50, font="Arial, 20", text="Type key to bind", tag="del", fill="blue")
             else:
                 self.state_manager.main_canvas.create_text(
-                    1920/2 + 200, 300 + i*50, font="Arial, 20", text=self.binds_dict[bind], tag="del")
+                    Window.WIDTH/2 + 200, 300 + i*50, font="Arial, 20", text=self.binds_dict[bind], tag="del")
             self.state_manager.main_canvas.create_text(
-                1920/2, 300 + i*50, font="Arial, 20", text=bind, tag="del")
+                Window.WIDTH/2, 300 + i*50, font="Arial, 20", text=bind, tag="del")
 
     def set_action(self, action):
         self.action = action

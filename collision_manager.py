@@ -1,4 +1,5 @@
 import math
+from Window import Window
 
 
 class collision_manager:

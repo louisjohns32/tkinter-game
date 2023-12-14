@@ -1,5 +1,5 @@
 from time import time
-
+from Window import Window
 
 class Camera:
 
@@ -18,7 +18,7 @@ class Camera:
 
     def get_edges(self):
         # returns edges of screen - bottom left coords , top right coords
-        return (self.x_pos-1920/2, self.y_pos-1080/2), (self.x_pos+1920/2, self.y_pos+1080/2)
+        return (self.x_pos-Window.WIDTH/2, self.y_pos-Window.HEIGHT/2), (self.x_pos+Window.WIDTH/2, self.y_pos+Window.HEIGHT/2)
 
     def lock_pos(self, locked):
         # lock position of camera

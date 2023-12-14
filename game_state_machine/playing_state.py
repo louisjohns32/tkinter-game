@@ -8,7 +8,7 @@ from PIL import Image, ImageTk
 from time import time
 import math
 from game_object import GameObject
-
+from Window import Window
 
 class PlayingState(GameBaseState):
     # Not using init as this is called when the state is reset, instead of a new instance being used
@@ -65,9 +65,9 @@ class PlayingState(GameBaseState):
     def render(self):
         # TODO add different layers and only delete layers which need updating
         self.state_manager.main_canvas.delete("all")
-        if self.collision_manager.check_out_of_bounds(self.player.x_pos-1920/2, self.player.y_pos) and self.collision_manager.check_out_of_bounds(self.player.x_pos+1920/2, self.player.y_pos):
+        if self.collision_manager.check_out_of_bounds(self.player.x_pos-Window.WIDTH/2, self.player.y_pos) and self.collision_manager.check_out_of_bounds(self.player.x_pos+Window.WIDTH/2, self.player.y_pos):
             self.camera.set_position(self.player.x_pos, self.camera.y_pos)
-        if self.collision_manager.check_out_of_bounds(self.player.x_pos, self.player.y_pos+1080/2) and self.collision_manager.check_out_of_bounds(self.player.x_pos, self.player.y_pos-1080/2):
+        if self.collision_manager.check_out_of_bounds(self.player.x_pos, self.player.y_pos+Window.HEIGHT/2) and self.collision_manager.check_out_of_bounds(self.player.x_pos, self.player.y_pos-Window.HEIGHT/2):
             self.camera.set_position(self.camera.x_pos, self.player.y_pos)
         # draw all graphics to screen
         # draw tile map
@@ -85,8 +85,8 @@ class PlayingState(GameBaseState):
             x = x-self.camera.x_pos
             y = y-self.camera.y_pos
             # get position on screen
-            x += (1920/2)  # TODO URGENT GET RID OF MAGIC NUMBERS
-            y += (1080/2)
+            x += (Window.WIDTH/2)  # TODO URGENT GET RID OF MAGIC NUMBERS
+            y += (Window.HEIGHT/2)
             # get sprite
             sprite = obj.get_sprite()[0]
             # get anchoring
@@ -108,16 +108,16 @@ class PlayingState(GameBaseState):
 
         # Render healthbar
         self.state_manager.main_canvas.create_rectangle(
-            1920/2-100, 940, 1920/2 + 100, 1040, fill="black")
+            Window.WIDTH/2-100, 940, Window.WIDTH/2 + 100, 1040, fill="black")
         self.state_manager.main_canvas.create_rectangle(
-            1920/2-100, 940, (1920/2 - 100 + 200*(self.player.health/self.player.max_health)), 1040, fill="red")
+            Window.WIDTH/2-100, 940, (Window.WIDTH/2 - 100 + 200*(self.player.health/self.player.max_health)), 1040, fill="red")
         # Render xp bar
         self.state_manager.main_canvas.create_rectangle(
-            1920/2-400, 1040, 1920/2 + 400, 1080, fill="black")
+            Window.WIDTH/2-400, 1040, Window.WIDTH/2 + 400, Window.HEIGHT, fill="black")
         self.state_manager.main_canvas.create_rectangle(
-            1920/2-400, 1040, (1920/2 - 400 + 800*(self.player.xp/self.player.max_xp)), 1080, fill="blue")
+            Window.WIDTH/2-400, 1040, (Window.WIDTH/2 - 400 + 800*(self.player.xp/self.player.max_xp)), Window.HEIGHT, fill="blue")
         self.state_manager.main_canvas.create_text(
-            1920/2-300, 1060, text=f"Level: {self.player.level}", fill="white", font=("Arial", 20))
+            Window.WIDTH/2-300, 1060, text=f"Level: {self.player.level}", fill="white", font=("Arial", 20))
         # Render score
         self.state_manager.main_canvas.create_text(
             100, 50, text=f"Score: {self.player_score}", fill="white", font=("Arial", 24))

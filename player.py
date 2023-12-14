@@ -21,17 +21,7 @@ class Player(GameObject):
     speed = 1  # speed multiplier
     duration = 1  # duration multiplier
 
-    # ANIMATIONS
-    facing = "r"  # r for right, l for left
-    idle_l_anim = Animation("cyberpunk-pack/1 Biker/Biker_idle.png",
-                            (20, 34), 4, scale=3, time=120, mirror=True)
-    idle_r_anim = Animation(
-        "cyberpunk-pack/1 Biker/Biker_idle.png", (20, 34), 4, scale=3,  time=120)
-
-    walking_right_anim = Animation(
-        "cyberpunk-pack/1 Biker/Biker_run.png", (34, 32), 6, scale=3, time=80)
-    walking_left_anim = Animation(
-        "cyberpunk-pack/1 Biker/Biker_run.png", (34, 32), 6, scale=3, time=80, mirror=True)
+   
 
     # TODO i could store this in a json? or come up with better way of loading items without the need for this
     items_map = {"Pinger": Pinger, "Wand": Wand,
@@ -52,9 +42,23 @@ class Player(GameObject):
         self. xp = 0
         self.max_xp = int(5 + self.level * 1.5)
 
-        self.active_anim = self.idle_r_anim
         self.items = []
         self.items.append(Wand(self))
+
+         # ANIMATIONS
+        self.facing = "r"  # r for right, l for left
+        self.idle_l_anim = Animation("cyberpunk-pack/1 Biker/Biker_idle.png",
+                            (20, 34), 4, scale=3, time=120, mirror=True)
+        self.idle_r_anim = Animation(
+            "cyberpunk-pack/1 Biker/Biker_idle.png", (20, 34), 4, scale=3,  time=120)
+
+        self.walking_right_anim = Animation(
+            "cyberpunk-pack/1 Biker/Biker_run.png", (34, 32), 6, scale=3, time=80)
+        self.walking_left_anim = Animation(
+            "cyberpunk-pack/1 Biker/Biker_run.png", (34, 32), 6, scale=3, time=80, mirror=True)
+        
+        self.active_anim = self.idle_r_anim
+
 
     def update(self):
         idle = True
