@@ -7,6 +7,7 @@ from items.orbitors import Orbitors
 from items.laser import Laser
 from items.pinger import Pinger
 from items.shuriken import Shuriken
+from Window import Window
 
 
 class Player(GameObject):
@@ -67,7 +68,7 @@ class Player(GameObject):
         #check input
         if self.input_handler.get_input_action("up"):
             self.set_position(self.x_pos, self.y_pos-self.speed *
-                        self.state_manager.PLAYING.delta_time * 500)
+                        Window.delta_time * 500)
             idle = False
             if self.facing == "l":
                 self.active_anim = self.walking_left_anim
@@ -80,19 +81,19 @@ class Player(GameObject):
             else:
                 self.active_anim = self.walking_right_anim
             self.set_position(self.x_pos, self.y_pos+self.speed *
-                        self.state_manager.PLAYING.delta_time * 500)
+                        Window.delta_time * 500)
             idle = False
 
         if self.input_handler.get_input_action("left"):
             self.set_position(self.x_pos-self.speed *
-                        self.state_manager.PLAYING.delta_time * 500, self.y_pos)
+                        Window.delta_time * 500, self.y_pos)
             self.active_anim = self.walking_left_anim
             self.facing = "l"
             idle = False
 
         if self.input_handler.get_input_action("right"):
             self.set_position(self.x_pos+self.speed *
-                        self.state_manager.PLAYING.delta_time * 500, self.y_pos)
+                        Window.delta_time * 500, self.y_pos)
             self.active_anim = self.walking_right_anim
             idle = False
             self.facing = "r"

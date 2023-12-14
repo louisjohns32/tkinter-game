@@ -4,6 +4,7 @@ from game_state_machine.game_state_manager import GameStateManager
 from map_manager import MapManager
 from Window import Window
 from math import sqrt
+from time import time
 
 
 # Should player be a game object (Player inherrits GameObject), or its own thing?
@@ -25,8 +26,9 @@ from math import sqrt
     
     # create and configure root winroot = Tk()
 def start_game():
-    print("start game")
-    global state_manager, window
+    global state_manager, window, start_time
+    start_time = time()
+    
     map_manager = MapManager()
     state_manager = GameStateManager(
         map_manager=map_manager, input_handler=input_handler, main_canvas=main_canvas)
@@ -37,7 +39,10 @@ def start_game():
     game_loop()
 
 def game_loop():
+    global start_time
     while True:
+        Window.delta_time = time() - start_time
+        start_time = time()
         state_manager.update()
 
         root.update_idletasks()
@@ -49,7 +54,6 @@ root.resizable(width=False, height=False)
 WIDTH = root.winfo_screenwidth()
 HEIGHT = root.winfo_screenheight()
 SCALE = sqrt((WIDTH*HEIGHT)/(1920*1080))
-print("HELLO", end = " ! ")
 
 window = Window()
 Window.HEIGHT = HEIGHT

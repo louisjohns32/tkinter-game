@@ -39,10 +39,14 @@ class Enemy(GameObject):
                 obj.__init__(*args, **kwargs)
                 return obj
             else:
-                # create new instance
+                # create new batch of instances
                 obj = super().__new__(cls)
                 cls.instances[cls].append(obj)
                 print(len(cls.instances))
+                for _ in range(100):
+                    cls.available_instances[cls].append(super().__new__(cls))
+                    cls.instances[cls].append(super().__new__(cls))
+                    print(cls.instances[cls])
                 return obj
         except:
             # create new instance

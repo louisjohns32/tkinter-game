@@ -1,6 +1,7 @@
 from projectiles.projectile import Projectile
 from math import radians, sin, cos, atan2
 from time import time
+from Window import Window
 
 
 class PingerProjectile(Projectile):
@@ -10,8 +11,8 @@ class PingerProjectile(Projectile):
 
     def update(self):
         #update projectile position
-        self.set_position(self.x_pos + cos(self.direction) * self.speed,
-                    self.y_pos + sin(self.direction) * self.speed)
+        self.set_position(self.x_pos + cos(self.direction) * self.speed * Window.delta_time * 50,
+                    self.y_pos + sin(self.direction) * self.speed * Window.delta_time * 50)
         
         #check if durtation has passed
         if time() > self.start_time + self.duration:

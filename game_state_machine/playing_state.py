@@ -23,7 +23,6 @@ class PlayingState(GameBaseState):
                              (file="cowboy.png"), self.collision_manager, self.obj_manager, self.state_manager)
         self.enemy_spawner = enemy_spawner(time(), self.obj_manager, self.player)
         self.obj_manager.new_object(self.player)
-        self.delta_time = 0
         self.change_sub_state(self.state_manager.WAVES)
         print("SCORE RESET")
         self.player_score = 0
@@ -36,8 +35,7 @@ class PlayingState(GameBaseState):
 
     def update_state(self):
 
-        self.delta_time = time() - self.start_time
-        self.start_time = time()
+        
         for obj in self.obj_manager.game_objects:  # loop through all gameobjects and call update on each
 
             obj.update()

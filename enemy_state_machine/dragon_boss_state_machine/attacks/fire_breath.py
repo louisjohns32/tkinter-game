@@ -5,6 +5,7 @@ from math import atan2, sqrt, radians
 from game_object import GameObject
 from animation import Animation
 from PIL import ImageTk
+from Window import Window
 
 
 class FireBreath(BossBaseAttack):
@@ -52,7 +53,7 @@ class FireBreathState(EnemyBaseState):
                 (player_pos[0] - self.enemy.x_pos)**2 + (player_pos[1] - self.enemy.y_pos)**2)
             if player_distance <= self.max_distance:
                 self.enemy.player.take_damage(
-                    self.damage * self.enemy.player.state_manager.PLAYING.delta_time)
+                    self.damage * Window.delta_time)
 
     def exit_state(self):
         self.enemy.player.obj_manager.delete_object(self.projectile)

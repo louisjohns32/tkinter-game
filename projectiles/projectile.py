@@ -1,6 +1,7 @@
 from game_object import GameObject
 import math
 from time import time
+from Window import Window
 # TODO Implement object pooling for projectiles and enemies to optimise memory usage
 
 
@@ -21,8 +22,8 @@ class Projectile(GameObject):
 
     def update(self):
 
-        self.set_position(self.x_pos + math.cos(self.direction) * self.speed,
-                    self.y_pos + math.sin(self.direction) * self.speed)
+        self.set_position(self.x_pos + math.cos(self.direction) * self.speed * Window.delta_time * 100,
+                    self.y_pos + math.sin(self.direction) * self.speed * Window.delta_time * 100)
         if time() > self.start_time + self.duration:
             self.delete()  # TODO Use pooling to reuse object instead of deleting. Much better memory optimisation by using pooling
 

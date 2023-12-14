@@ -1,4 +1,5 @@
 from enemy_state_machine.enemy_base_state import EnemyBaseState
+from Window import Window
 
 import math
 
@@ -15,9 +16,9 @@ class EnemyChasingState(EnemyBaseState):
         self.angle = math.atan2(y, x)
         # move towards player
         self.enemy.x_pos += math.cos(self.angle) * self.enemy.speed * \
-            self.enemy.player.state_manager.PLAYING.delta_time * 50
+            Window.delta_time * 50
         self.enemy.y_pos += math.sin(self.angle) * self.enemy.speed * \
-            self.enemy.player.state_manager.PLAYING.delta_time * 50
+            Window.delta_time * 50
 
         # update facing
         if math.cos(self.angle) > 0:

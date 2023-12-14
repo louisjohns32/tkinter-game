@@ -2,7 +2,7 @@ from enemy_state_machine.boss_state_machine.attacks.boss_base_attack import Boss
 from time import time
 from enemy_state_machine.enemy_base_state import EnemyBaseState
 from math import atan2, cos, sin
-
+from Window import Window
 
 class Charge(BossBaseAttack):
     cooldown = 10
@@ -23,8 +23,8 @@ class BossChargingState(EnemyBaseState):
 
     def update_state(self):
         self.enemy.set_position(self.enemy.x_pos + cos(self.direction) * self.enemy.speed * self.enemy.speed
-                          * self.enemy.player.state_manager.PLAYING.delta_time * 200, self.enemy.y_pos +
-                          sin(self.direction) * self.enemy.speed * self.enemy.player.state_manager.PLAYING.delta_time * 200)
+                          * Window.delta_time * 200, self.enemy.y_pos +
+                          sin(self.direction) * self.enemy.speed * Window.delta_time * 200)
 
     def check_switch_states(self):
         # check collision with screen edge #TODO MOVE INTO CHECK COLLISION

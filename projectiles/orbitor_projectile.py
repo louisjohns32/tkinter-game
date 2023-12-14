@@ -2,6 +2,8 @@ from projectiles.projectile import Projectile
 from math import radians, pi
 from animation import Animation
 from PIL import ImageTk
+from Window import Window
+
 
 
 class OrbitorProjectile(Projectile):

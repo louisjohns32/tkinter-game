@@ -2,6 +2,7 @@ from time import time
 from PIL import Image, ImageTk
 from projectiles.projectile import Projectile
 import math
+from Window import Window
 
 
 class LaserProjectile(Projectile):
