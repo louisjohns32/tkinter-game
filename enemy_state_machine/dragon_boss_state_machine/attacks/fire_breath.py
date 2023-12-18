@@ -30,16 +30,16 @@ class FireBreathState(EnemyBaseState):
 
         (self.enemy.facing)
         if self.enemy.facing == "left":
-            pos = (self.enemy.x_pos - 226, self.enemy.y_pos)
+            pos = (self.enemy.x_pos - 226 * Window.SCALE, self.enemy.y_pos)
             self.direction = radians(180)
         elif self.enemy.facing == "right":
-            pos = (self.enemy.x_pos + 226, self.enemy.y_pos)
+            pos = (self.enemy.x_pos + 226 * Window.SCALE, self.enemy.y_pos)
             self.direction = radians(0)
         elif self.enemy.facing == "up":
-            pos = (self.enemy.x_pos, self.enemy.y_pos-160)
+            pos = (self.enemy.x_pos, self.enemy.y_pos-160*Window.SCALE)
             self.direction = radians(90)
         else:
-            pos = (self.enemy.x_pos, self.enemy.y_pos+160)
+            pos = (self.enemy.x_pos, self.enemy.y_pos+160*Window.SCALE)
             self.direction = radians(270)
 
         self.projectile = FireBreathProjectile(
@@ -54,7 +54,7 @@ class FireBreathState(EnemyBaseState):
         if abs(self.direction - angle_toplayer) < self.spread/2:
             player_distance = sqrt(
                 (player_pos[0] - self.enemy.x_pos)**2 + (player_pos[1] - self.enemy.y_pos)**2)
-            if player_distance <= self.breath_distance:
+            if player_distance <= self.breath_distance * Window.SCALE:
                 self.enemy.player.take_damage(
                     self.damage * Window.delta_time)
 

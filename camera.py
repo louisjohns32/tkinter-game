@@ -3,7 +3,10 @@ from Window import Window
 
 class Camera:
 
+    instance = None
+
     def __init__(self):
+        Camera.instance = self # set singleton instance
         self.locked = False
         self.x_pos = 0
         self.y_pos = 0

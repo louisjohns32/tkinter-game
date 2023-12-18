@@ -8,6 +8,7 @@ from enemy_state_machine.boss_state_machine.attacks.charge import BossChargingSt
 from enemy_state_machine.dragon_boss_state_machine.attacks.blast import BlastState
 from enemy_state_machine.enemy_moving_to_state import EnemyMovingToState
 from enemy_state_machine.dragon_boss_state_machine.dragon_phase2_state import DragonPhase2State
+from enemy_state_machine.dragon_boss_state_machine.attacks.devestate import DevestateState
 
 
 class DragonStateFactory:
@@ -32,8 +33,8 @@ class DragonStateFactory:
         # Have an enemy which is immune to damage, but can be killed by devestate. Spawn 1 for each phase 1.
         return BlastState(enemy)
 
-    def devestate(self, enemy):
-        return ___
+    def devestate(self, enemy, left, next_state=None):
+        return DevestateState(enemy, left, next_state=next_state)
 
 
 # LEVEL 3 STATE
@@ -44,8 +45,8 @@ class DragonStateFactory:
     def attacking(self, enemy):  # Under finding_attack
         return EnemyAttackingState(enemy)
 
-    def moveTo(self, enemy, pos):
-        return EnemyMovingToState(enemy, pos)
+    def moveTo(self, enemy, pos, next_state=None):
+        return EnemyMovingToState(enemy, pos, next_state=next_state)
 
     def dead(self, enemy):
         return EnemyDeadState(enemy)

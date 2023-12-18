@@ -12,11 +12,11 @@ class Orbitors(PlayerWeapon):
 
     cooldown = 6
     radius = 128
-    speed = 10
+    speed = 5
     penetrate = 10
     duration = 3
 
-    level_map = {2: {"COOLDOWN": 4, "DAMAGE": 6, "PROJECTILES": 2}, 3: {"PROJECTILES": 3, "DAMAGE": 7}, 4: {"SPEED": 20, "DAMAGE": 10}, 5: {
+    level_map = {2: {"COOLDOWN": 4, "DAMAGE": 6, "PROJECTILES": 2}, 3: {"PROJECTILES": 3, "DAMAGE": 7}, 4: {"SPEED": 10, "DAMAGE": 10}, 5: {
         "COOLDOWN": 3, "DAMAGE": 15}, 6: {"PROJECTILES": 4}, 7: {"DAMAGE": 20}, 8: {"COOLDOWN": 2}, 9: {"DAMAGE": 25}, 10: {"PROJECTILES": 5}}
 
     def shoot_projectile(self, projectiles):

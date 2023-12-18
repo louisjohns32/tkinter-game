@@ -13,7 +13,7 @@ class Shotgun(PlayerWeapon):
     name = "Shotgun"
     text = "BAM"
 
-    speed = 50
+    speed = 30
     damage = 15  # CHANGE BACK TO 5
     projectiles = 5
     cooldown = 5

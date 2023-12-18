@@ -43,7 +43,7 @@ class Enemy(GameObject):
                 obj = super().__new__(cls)
                 cls.instances[cls].append(obj)
                 print(len(cls.instances))
-                for _ in range(100):
+                for _ in range(5):
                     cls.available_instances[cls].append(super().__new__(cls))
                     cls.instances[cls].append(super().__new__(cls))
                     print(cls.instances[cls])

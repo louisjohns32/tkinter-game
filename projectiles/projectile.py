@@ -28,19 +28,20 @@ class Projectile(GameObject):
             self.delete()  # TODO Use pooling to reuse object instead of deleting. Much better memory optimisation by using pooling
 
         # check collision
-        collision = self.player.collision_manager.check_collision(
+        collisions = self.player.collision_manager.check_collision(
             self.x_pos, self.y_pos, self.radius)
-        if type(collision) != bool: # collision is an object
-            if collision.tag == self.target: # collision is target
-                if collision not in self.hit_objects: # collision not hit before
-                    collision.take_damage(self.damage)
-                    self.penetrate -= 1
-                    self.hit_objects.append(collision)
-                    # delete object if not enough penetrates
-                    if self.penetrate < 0:
-                        self.delete()
+        if type(collisions) != bool: # collision is an object
+            for collision in collisions:
+                if collision.tag == self.target: # collision is target
+                    if collision not in self.hit_objects: # collision not hit before
+                        collision.take_damage(self.damage)
+                        self.penetrate -= 1
+                        self.hit_objects.append(collision)
+                        # delete object if not enough penetrates
+                        if self.penetrate < 0:
+                            self.delete()
         else:
-            if collision:
+            if collisions:
                 self.delete()
 
     def delete(self):

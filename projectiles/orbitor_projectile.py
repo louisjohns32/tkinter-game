@@ -23,7 +23,7 @@ class OrbitorProjectile(Projectile):
 
     def update(self):
         # update direction
-        self.direction += self.direction_change
+        self.direction += self.direction_change * Window.delta_time * 100
         super().update()
         # move projectile
         self.set_position(

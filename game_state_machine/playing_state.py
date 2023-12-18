@@ -83,7 +83,7 @@ class PlayingState(GameBaseState):
             x = x-self.camera.x_pos
             y = y-self.camera.y_pos
             # get position on screen
-            x += (Window.WIDTH/2)  # TODO URGENT GET RID OF MAGIC NUMBERS
+            x += (Window.WIDTH/2) 
             y += (Window.HEIGHT/2)
             # get sprite
             sprite = obj.get_sprite()[0]
@@ -100,25 +100,29 @@ class PlayingState(GameBaseState):
 
                 x += math.cos(angle) * length/2
                 y += math.sin(angle) * length/2
+
             # draw sprite if on screen
-            self.state_manager.main_canvas.create_image(
-                x, y, image=obj.get_sprite()[0])
+            obj.draw_to_screen((x,y),self.state_manager.main_canvas)
+            
 
         # Render healthbar
         self.state_manager.main_canvas.create_rectangle(
-            Window.WIDTH/2-100, 940, Window.WIDTH/2 + 100, 1040, fill="black")
+            Window.WIDTH/2-100, Window.HEIGHT-100, Window.WIDTH/2 + 100, Window.HEIGHT-40, fill="black")
         self.state_manager.main_canvas.create_rectangle(
-            Window.WIDTH/2-100, 940, (Window.WIDTH/2 - 100 + 200*(self.player.health/self.player.max_health)), 1040, fill="red")
+            Window.WIDTH/2-100, Window.HEIGHT - 100, (Window.WIDTH/2 - 100 + 200*(self.player.health/self.player.max_health)), Window.HEIGHT -  40, fill="red")
         # Render xp bar
         self.state_manager.main_canvas.create_rectangle(
-            Window.WIDTH/2-400, 1040, Window.WIDTH/2 + 400, Window.HEIGHT, fill="black")
+            Window.WIDTH/2-400, Window.HEIGHT-40, Window.WIDTH/2 + 400, Window.HEIGHT, fill="black")
         self.state_manager.main_canvas.create_rectangle(
-            Window.WIDTH/2-400, 1040, (Window.WIDTH/2 - 400 + 800*(self.player.xp/self.player.max_xp)), Window.HEIGHT, fill="blue")
+            Window.WIDTH/2-400, Window.HEIGHT-40, (Window.WIDTH/2 - 400 + 800*(self.player.xp/self.player.max_xp)), Window.HEIGHT, fill="blue")
         self.state_manager.main_canvas.create_text(
-            Window.WIDTH/2-300, 1060, text=f"Level: {self.player.level}", fill="white", font=("Arial", 20))
+            Window.WIDTH/2-300, Window.HEIGHT-20, text=f"Level: {self.player.level}", fill="white", font=("Arial", 20))
         # Render score
         self.state_manager.main_canvas.create_text(
             100, 50, text=f"Score: {self.player_score}", fill="white", font=("Arial", 24))
+        
+        # FOR DEBUGGING - Render fps
+        self.state_manager.main_canvas.create_text(Window.WIDTH-100,50,text=f"FPS: {1/Window.delta_time}")
 
     def addScore(self, amnt):
         self.player_score += amnt

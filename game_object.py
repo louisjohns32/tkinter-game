@@ -40,3 +40,8 @@ class GameObject:  # Should this be abstract?
 
     def load(self, info):
         self.x_pos, self.y_pos = info["position"]
+
+    def draw_to_screen(self,pos, canvas):
+        canvas.create_image(
+                pos[0], pos[1], image=self.get_sprite()[0])
+        

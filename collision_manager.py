@@ -33,14 +33,18 @@ class collision_manager:
 
     def check_collision_objects(self, x, y, radius, tag=""):
         radius *= Window.SCALE
+        res = []
         # check against other objects - can be optimised further in future, instead of looping through all objects
         for obj in self.collidable_objects:
 
             if abs(obj.x_pos - x) < radius + obj.radius and abs(obj.y_pos - y) < radius + obj.radius:
                 # Collision
                 if tag == "" or obj.tag == tag:
-                    return obj
-        return False
+                    res.append(obj)
+
+        if len(res) == 0:
+            return False
+        return res
 
         # TODO Store enemies in each tile, and only check collisions with enemies in adjacent tiles to better optimise
 
@@ -90,6 +94,23 @@ class collision_manager:
         if x < 0 or x > len(self.MAP_ARRAY)-1 or y < 0 or y > len(self.MAP_ARRAY[0])-1:
             return False
         return True
+    
+    def check_collision_square(self,x,y,radius,tag=""):
+        radius *= Window.SCALE
+        # check against other objects - can be optimised further in future, instead of looping through all objects
+        for obj in self.collidable_objects:
+            if obj.tag != tag:
+                continue
+            # check if within square
+                # check if object lies within x-radius x+radius
+                if obj.x_pos > x-radius and obj.x_pos < x + radius:
+                    # check if object lies within y-radius y+radius
+                    if obj.y_pos > y-radius and obj.y_pos < y + radius:
+                        #   return collision
+                        return obj
+                    # if both are true, return collision
+            pass
+        return False
 
     def update(self):
         # TODO Reimplement collision detection between enemies

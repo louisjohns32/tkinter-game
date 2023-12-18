@@ -1,5 +1,6 @@
 from game_state_machine.game_base_state import GameBaseState
 import json
+from Window import Window
 
 
 class OptionsState(GameBaseState):

@@ -19,16 +19,17 @@ class PingerProjectile(Projectile):
             self.delete()  
 
         # check collision with objects
-        collision = self.player.collision_manager.check_collision_objects(
+        collisions = self.player.collision_manager.check_collision_objects(
             self.x_pos, self.y_pos, self.radius)
-        if type(collision) != bool:
-            if collision.tag == self.target:
-                if collision not in self.hit_objects:
-                    collision.take_damage(self.damage)
-                    self.penetrate -= 1
-                    self.hit_objects.append(collision)
-                    if self.penetrate < 0:
-                        self.delete()
+        if type(collisions) != bool:
+            for collision in collisions:
+                if collision.tag == self.target:
+                    if collision not in self.hit_objects:
+                        collision.take_damage(self.damage)
+                        self.penetrate -= 1
+                        self.hit_objects.append(collision)
+                        if self.penetrate < 0:
+                            self.delete()
 
         # Check for collision with screen edge
         collision = self.player.collision_manager.check_collision_screen(
