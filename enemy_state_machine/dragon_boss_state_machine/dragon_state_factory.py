@@ -45,8 +45,8 @@ class DragonStateFactory:
     def attacking(self, enemy):  # Under finding_attack
         return EnemyAttackingState(enemy)
 
-    def moveTo(self, enemy, pos, next_state=None):
-        return EnemyMovingToState(enemy, pos, next_state=next_state)
+    def moveTo(self, enemy, pos, next_state=None, speed_multiplier=1):
+        return EnemyMovingToState(enemy, pos, next_state=next_state,speed_multiplier=speed_multiplier)
 
     def dead(self, enemy):
         return EnemyDeadState(enemy)

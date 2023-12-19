@@ -37,8 +37,13 @@ class ObjectManager:
         # set references
         self.collision_manager = collision_manager
 
-    def new_object(self, obj):
-        self.game_objects.append(obj)
+    def new_object(self, obj,front=False):
+        if front:
+            # add object to front of list
+            self.game_objects.insert(0,obj)
+        else:
+            self.game_objects.append(obj)
+            
         # add to collision manager, if object is collidable
         if obj.collidable:
             self.collision_manager.collidable_objects.append(obj)

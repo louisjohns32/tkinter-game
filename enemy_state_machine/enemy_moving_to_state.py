@@ -6,11 +6,12 @@ from camera import Camera
 
 
 class EnemyMovingToState(EnemyBaseState):
-    def __init__(self, enemy, pos, next_state = None):
+    def __init__(self, enemy, pos, next_state = None, speed_multiplier = 1):
         super().__init__(enemy)
         
         self.target = pos
         self.next_state = next_state
+        self.speed_multiplier = speed_multiplier
 
     def enter_state(self):
         self.direction = atan2(-self.enemy.y_pos +
@@ -20,9 +21,9 @@ class EnemyMovingToState(EnemyBaseState):
         pass
 
     def update_state(self):
-        self.enemy.x_pos += math.cos(self.direction) * self.enemy.speed * \
+        self.enemy.x_pos += math.cos(self.direction) * self.enemy.speed * self.speed_multiplier * \
             Window.delta_time * 50
-        self.enemy.y_pos += math.sin(self.direction) * self.enemy.speed * \
+        self.enemy.y_pos += math.sin(self.direction) * self.enemy.speed * self.speed_multiplier * \
             Window.delta_time * 50
 
     def exit_state(self):

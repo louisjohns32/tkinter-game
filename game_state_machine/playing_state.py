@@ -122,7 +122,7 @@ class PlayingState(GameBaseState):
             100, 50, text=f"Score: {self.player_score}", fill="white", font=("Arial", 24))
         
         # FOR DEBUGGING - Render fps
-        self.state_manager.main_canvas.create_text(Window.WIDTH-100,50,text=f"FPS: {1/Window.delta_time}")
+        self.state_manager.main_canvas.create_text(Window.WIDTH-100,50,text="%0.2f" %(1/Window.delta_time))
 
     def addScore(self, amnt):
         self.player_score += amnt

@@ -95,20 +95,21 @@ class collision_manager:
             return False
         return True
     
-    def check_collision_square(self,x,y,radius,tag=""):
-        radius *= Window.SCALE
+    def check_collision_rect(self,x,y,rectangle_tuple,tag=""):
+        x_radius = rectangle_tuple[0] * Window.SCALE
+        y_radius = rectangle_tuple[1] * Window.SCALE
         # check against other objects - can be optimised further in future, instead of looping through all objects
         for obj in self.collidable_objects:
             if obj.tag != tag:
                 continue
             # check if within square
                 # check if object lies within x-radius x+radius
-                if obj.x_pos > x-radius and obj.x_pos < x + radius:
-                    # check if object lies within y-radius y+radius
-                    if obj.y_pos > y-radius and obj.y_pos < y + radius:
-                        #   return collision
-                        return obj
-                    # if both are true, return collision
+            if obj.x_pos > x-x_radius and obj.x_pos < x + x_radius:
+                # check if object lies within y-radius y+radius
+                if obj.y_pos > y-y_radius and obj.y_pos < y + y_radius:
+                    #   return collision
+                    return obj
+                # if both are true, return collision
             pass
         return False
 

@@ -6,6 +6,7 @@ import random as rand
 from Window import Window
 from animation import Animation
 from PIL import ImageTk
+from camera import Camera
 
 
 class Devestate(BossBaseAttack):
@@ -34,7 +35,7 @@ class DevestateState(EnemyBaseState):
         else:
             self.dir = 1
 
-        self.enemy.player.obj_manager.new_object(DevestateProjectile((self.enemy.x_pos, self.enemy.y_pos),self.enemy))
+        self.enemy.player.obj_manager.new_object(DevestateProjectile((self.enemy.x_pos, self.enemy.y_pos),self.enemy,self.left),front=True)
 
 
     def update_state(self):
@@ -48,39 +49,52 @@ class DevestateState(EnemyBaseState):
             if self.next_state:
                 self.change_state(self.next_state)
             else:
-                self.super_state.change_state(self.enemy.state_factory.phase1(self.enemy))
+                self.change_state(self.enemy.state_factory.moveTo(
+                    self.enemy,(Camera.instance.get_edges()[int(not self.left)][0] +50 -100 * int(not self.left), self.enemy.player.y_pos),next_state=
+                    self.enemy.state_factory.devestate(self.enemy,not self.left),speed_multiplier=2))
 
 
 class DevestateProjectile(Projectile):
-    time_to_complete = 2
-    def __init__(self, pos,enemy):
+    time_to_complete = 1.5
+    time_to_expire = 9
+    def __init__(self, pos,enemy,left):
         # init animation
         self.main_anim = Animation("assets/magma-ground.png",(256,256),1,time=10000)
         self.speed = 0
         self.direction = 0
-        self.radius = 64
+        self.height = 256
         self.start_time = time()
         self.x_pos, self.y_pos = pos
         self.enemy = enemy
-        print("DEV PROJ")
-        pass
+        self.player = enemy.player
+        self.sprite = ImageTk.PhotoImage(self.main_anim.get_sprite())
+        self.left = left
+        self.progress = 0
 
     def update(self):
-        # check collision
-        obj = self.enemy.collision_manager.check_collision_square(self.x_pos,self.y_pos,self.radius, tag="Player")
-        if obj:
-            obj.take_damage(20)
+        self.progress = (time()-self.start_time)/self.time_to_complete
 
-        self.sprite = ImageTk.PhotoImage(self.main_anim.get_sprite())
+        position = (self.x_pos+((Window.WIDTH/2)*self.progress)/2 - int(self.left)*((Window.WIDTH/2)*self.progress),self.y_pos)
+        # check collision - super messy, TODO cleanup
+        obj = self.enemy.collision_manager.check_collision_rect(position[0],position[1],
+                                                                ((Window.WIDTH/2)*self.progress, self.height/2), tag="player")
+        if obj:
+            obj.take_damage(100 * Window.delta_time) 
+
+        
+
+        
+
+        if time() > self.start_time + self.time_to_expire:
+            self.delete()
         pass
 
     def draw_to_screen(self, pos, canvas):
-        print("RENDER")
-        progress = (time()-self.start_time)/self.time_to_complete
-        progress *= Window.WIDTH
-        tiles_width = progress//(Window.SCALE*256)
+        
+        width = self.progress * Window.WIDTH
+        tiles_width = width//(Window.SCALE*256)
         for i in range(int(tiles_width)):
-            canvas.create_image(pos[0]+(Window.SCALE*256*i),pos[1],image=self.sprite)
+            canvas.create_image(pos[0]+(Window.SCALE*256*i) - 2* (Window.SCALE*256*i) *(int(self.left)),pos[1],image=self.sprite)
         
     
 
