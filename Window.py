@@ -4,7 +4,7 @@ class Window:
     SCALE = 0
     state_manager = None
 
-    delta_time = 0
+    delta_time = 0.01
     
     def __init__(self):
         self.instance = self

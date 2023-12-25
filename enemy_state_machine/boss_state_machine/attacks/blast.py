@@ -16,9 +16,9 @@ class Blast(BossBaseAttack):
 
 class BossBlastingState(EnemyBaseState):
     sprite = "assets/projectiles/enemyblast-projectile.png"
-    charge_time = 0.25
+    charge_time = 0.5
     num_projectiles = 100
-    speed = 100
+    speed = 30
     duration = 3
 
     def __init__(self, enemy):

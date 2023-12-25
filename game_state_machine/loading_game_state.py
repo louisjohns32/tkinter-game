@@ -4,7 +4,6 @@ import os
 import datetime
 
 
-# TODO "The ability to customise experience for the user", "Boss key"
 class LoadingGameState(GameBaseState):
     def initialise_state(self):
         pass

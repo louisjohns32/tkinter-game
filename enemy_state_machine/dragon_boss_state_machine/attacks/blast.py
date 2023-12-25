@@ -57,18 +57,16 @@ class BlastProjectile(Projectile):
             self.delete()  # TODO Use pooling to reuse object instead of deleting. Much better memory optimisation by using pooling
 
         # check collision
-        collision = self.player.collision_manager.check_collision(
-            self.x_pos, self.y_pos, 32)
+        collision = self.player.collision_manager.check_collision_objects(
+            self.x_pos, self.y_pos, 32, tag="player")
         if type(collision) != bool:
-            if collision.tag == "player" or collision.tag == "enemy":
-                if collision not in self.hit_objects:
-                    collision.take_damage(self.damage)
-                    self.penetrate -= 1
-                    print(f"Penetrate decremented  to {self.penetrate}")
-                    self.hit_objects.append(collision)
-                    if self.penetrate < 0:
-                        print("DELETED")
-                        self.delete()
+            if collision not in self.hit_objects:
+                collision.take_damage(self.damage)
+                self.penetrate -= 1
+                print(f"Penetrate decremented  to {self.penetrate}")
+                self.hit_objects.append(collision)
+                if self.penetrate < 0:
+                    self.delete()
         else:
             if collision:
                 self.delete()

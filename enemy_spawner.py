@@ -7,6 +7,7 @@ from enemies.rat import Rat
 from enemies.boss import Boss
 from enemies.dragon_boss import DragonBoss
 from enemies.flower import Flower
+from enemies.pumpking import Pumpking
 import time
 
 
@@ -38,13 +39,17 @@ class enemy_spawner:
                   23: {},
                   "boss": {Boss: 1}
                   }
-    wave_1_map = {"boss" : {DragonBoss : 1}}
+   # wave_1_map = {10: {Slime:20},1 : {Slime : 30},2:{}, 3:{} ,"boss" : {DragonBoss : 1}}
 
     wave_2_map = {
         0: {},
         1: {Flower: 5},
         2: {},
         3: {Flower: 10},
+        4: {Pumpking : 3},
+        5: {Flower: 15},
+        6 : {},
+        7:{},
         "boss": {DragonBoss: 1}}
 
     def __init__(self, start_time: int, obj_manager, player):
@@ -58,6 +63,7 @@ class enemy_spawner:
         self.enemy_multiplier = 1
 
     def update(self):
+        
         try:
             for enemy in self.spawn_map[self.wave][(time.time()-self.start_time)//5]:
                 # loop for how many enemies need to be spawned
@@ -68,11 +74,11 @@ class enemy_spawner:
                     x = self.player.x_pos + cos(radians(angle)) * 1000
                     y = self.player.y_pos + sin(radians(angle)) * 1000
                     # create enemy object
-                    self.obj_manager.new_object(enemy(ImageTk.PhotoImage(file="testObj.png"), self.player, pos=(
-                        x, y), collision_manager=self.obj_manager.collision_manager))
+                    enemy.instance.add_object((x,y))
             
             self.spawn_map[self.wave][(time.time()-self.start_time)//5] = {}
         except Exception as e:
+            print(f"ERROR: {e}")
             # Spawn boss
             for enemy in self.spawn_map[self.wave]["boss"]:
                 for _ in range(self.spawn_map[self.wave]["boss"][enemy]):

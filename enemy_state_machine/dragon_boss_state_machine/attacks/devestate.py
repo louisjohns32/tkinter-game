@@ -67,7 +67,7 @@ class DevestateProjectile(Projectile):
         self.x_pos, self.y_pos = pos
         self.enemy = enemy
         self.player = enemy.player
-        self.sprite = ImageTk.PhotoImage(self.main_anim.get_sprite())
+        self.sprite = self.main_anim.get_sprite()
         self.left = left
         self.progress = 0
 

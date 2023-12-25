@@ -1,5 +1,6 @@
 import math
 from Window import Window
+from player import Player
 
 
 class collision_manager:
@@ -44,6 +45,15 @@ class collision_manager:
 
         if len(res) == 0:
             return False
+        return res
+    
+    def check_collision_dumb_enemies(self,x,y, radius):
+        res = []
+        for i,enemy_type in enumerate(Player.instance.obj_manager.dumb_enemies):
+            for j,enemy in enumerate(enemy_type.obj_list):
+                if abs(x-enemy["position"][0]) < radius:
+                    if abs(y-enemy["position"][1]) < radius:
+                        res.append((i,j))
         return res
 
         # TODO Store enemies in each tile, and only check collisions with enemies in adjacent tiles to better optimise

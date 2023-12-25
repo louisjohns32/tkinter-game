@@ -20,13 +20,13 @@ class DragonBoss(Enemy):
         self.current_state.enter_state()
 
         self._flying_right = Animation(
-            "cyberpunk-pack/red-dragon.png", (144, 128), 12, scale=2, time=64, start=3, end=5)
+            "cyberpunk-pack/red-dragon.png", (144, 128), 3, scale=2, time=64, start=3)
         self._flying_left = Animation("cyberpunk-pack/red-dragon.png",
-                             (144, 128), 12, scale=2, time=64, start=9, end=11)
+                             (144, 128), 3, scale=2, time=64, start=9)
         self._flying_up = Animation("cyberpunk-pack/red-dragon.png",
-                           (144, 128), 12, scale=2, time=64, start=0, end=2)
+                           (144, 128), 3, scale=2, time=64)
         self._flying_down = Animation("cyberpunk-pack/red-dragon.png",
-                             (144, 128), 12, scale=2, time=64, start=6, end=8)
+                             (144, 128), 3, scale=2, time=64, start=6)
         self.active_anim = self._flying_right
         self.facing = "right"
 

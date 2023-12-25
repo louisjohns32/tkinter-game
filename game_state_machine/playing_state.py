@@ -9,6 +9,8 @@ from time import time
 import math
 from game_object import GameObject
 from Window import Window
+from enemy_dumb import EnemyDumb
+
 
 class PlayingState(GameBaseState):
     # Not using init as this is called when the state is reset, instead of a new instance being used
@@ -18,7 +20,6 @@ class PlayingState(GameBaseState):
         self.collision_manager = collision_manager(
             self.state_manager.map_manager.MAP_ARRAY, self.state_manager.map_manager.TILE_SIZE, self.state_manager)
         self.obj_manager = ObjectManager(self.collision_manager)
-        print(f"Game objects after init: {self.obj_manager.game_objects}")
         self.player = Player(self.state_manager.input_handler,  ImageTk.PhotoImage
                              (file="cowboy.png"), self.collision_manager, self.obj_manager, self.state_manager)
         self.enemy_spawner = enemy_spawner(time(), self.obj_manager, self.player)
@@ -29,15 +30,20 @@ class PlayingState(GameBaseState):
 
     def enter_state(self):
         self.start_time = time()
+        
 
     def exit_state(self):
         pass
 
     def update_state(self):
 
-        
+        # update game objects
         for obj in self.obj_manager.game_objects:  # loop through all gameobjects and call update on each
 
+            obj.update()
+
+        # update dumb objects
+        for obj in self.obj_manager.dumb_objects + self.obj_manager.dumb_enemies:
             obj.update()
 
         self.collision_manager.update()
@@ -69,13 +75,17 @@ class PlayingState(GameBaseState):
             self.camera.set_position(self.camera.x_pos, self.player.y_pos)
         # draw all graphics to screen
         # draw tile map
-        # TODO Change to loop through tiles in camera frame alone
-        for x, tile_row in enumerate(self.state_manager.map_manager.MAP_ARRAY):
-            for y, tile in enumerate(tile_row):
+        player_tile = (int(self.camera.x_pos // self.state_manager.map_manager.TILE_SIZE),
+                        int(self.camera.y_pos//self.state_manager.map_manager.TILE_SIZE))
+        for x, tile_row in enumerate(self.state_manager.map_manager.MAP_ARRAY[player_tile[0]-8:player_tile[0]+9]):
+            x+= player_tile[0] - 8
+            for y, tile in enumerate(tile_row[player_tile[1]-5:player_tile[1]+5]):
+                y+= player_tile[1] - 5
                 self.state_manager.main_canvas.create_image(x*self.state_manager.map_manager.TILE_SIZE-self.camera.x_pos + 8*self.state_manager.map_manager.TILE_SIZE,
-                                                          y * self.state_manager.map_manager.TILE_SIZE - self.camera.y_pos + 5*self.state_manager.map_manager.TILE_SIZE, image=self.state_manager.map_manager.TEXTURE_MAP[self.state_manager.map_manager.MAP_ARRAY[x][y]])
+                                                        y * self.state_manager.map_manager.TILE_SIZE - self.camera.y_pos + 5*self.state_manager.map_manager.TILE_SIZE, image=self.state_manager.map_manager.TEXTURE_MAP[self.state_manager.map_manager.MAP_ARRAY[x][y]])
         # draw game objects
         for obj in self.obj_manager.game_objects:
+
             # get position in world
             x = obj.x_pos
             y = obj.y_pos
@@ -103,7 +113,10 @@ class PlayingState(GameBaseState):
 
             # draw sprite if on screen
             obj.draw_to_screen((x,y),self.state_manager.main_canvas)
-            
+        
+        # draw dumb objects
+        for obj in self.obj_manager.dumb_objects + self.obj_manager.dumb_enemies:
+            obj.draw_to_screen(self.state_manager.main_canvas)
 
         # Render healthbar
         self.state_manager.main_canvas.create_rectangle(
@@ -122,7 +135,7 @@ class PlayingState(GameBaseState):
             100, 50, text=f"Score: {self.player_score}", fill="white", font=("Arial", 24))
         
         # FOR DEBUGGING - Render fps
-        self.state_manager.main_canvas.create_text(Window.WIDTH-100,50,text="%0.2f" %(1/Window.delta_time))
+        self.state_manager.main_canvas.create_text(Window.WIDTH-100,50,text="%0.2f" %(1/(Window.delta_time+0.001)))
 
     def addScore(self, amnt):
         self.player_score += amnt

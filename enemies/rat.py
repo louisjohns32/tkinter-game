@@ -1,24 +1,12 @@
-from enemy import Enemy
+from enemy_dumb import EnemyDumb
 from animation import Animation
 
 
-class Rat(Enemy):
-    def __init__(self, sprite, player_ref, pos=(0,0), collision_manager=None):
-        super().__init__(sprite, player_ref, pos, collision_manager)
+class Rat(EnemyDumb):
+    move_l_anim_args = ["cyberpunk-pack/rat-walk.png", (32, 20), 3]
+    move_l_anim_kwargs = {"scale":2, "time":60, "mirror":True}
+    move_r_anim_args = move_l_anim_args
+    move_r_anim_kwargs =  {"scale":2, "time":60}
 
-        if self.walking_right_anim == None: 
-            self.walking_right_anim = Animation(
-            "cyberpunk-pack/rat-walk.png", (32, 20), 3, scale=2, time=60)
-            self.walking_left_anim = Animation(
-            "cyberpunk-pack/rat-walk.png", (32, 20), 3, scale=2, time=60, mirror=True)
-            self.idle_right_anim = Animation(
-            "cyberpunk-pack/rat-walk.png", (32, 20), 3, scale=2, time=60)
-            self.idle_left_anim = Animation(
-            "cyberpunk-pack/rat-walk.png", (32, 20), 3, scale=2, time=60, mirror=True)
-            self.speed = 8
-            self.damage = 1
-
-        self.max_health = 10
-        self.health = self.max_health
-
-    type = "Rat"
+    SPEED = 5
+        

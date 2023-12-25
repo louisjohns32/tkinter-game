@@ -18,7 +18,7 @@ class BossOrbingFrontalState(EnemyBaseState):
     sprite = "assets/projectiles/enemyorb-projectile.png"
     charge_time = 1
     num_projectiles = 10
-    speed = 20
+    speed = 6
     duration = 5
 
     def __init__(self, enemy):

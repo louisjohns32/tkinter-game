@@ -18,7 +18,7 @@ class BossBlastingFrontalState(EnemyBaseState):
     sprite = "assets/projectiles/enemyblast-projectile.png"
     charge_time = 0.5
     num_projectiles = 50
-    speed = 100
+    speed = 30
     duration = 3
 
     def __init__(self, enemy):

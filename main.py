@@ -24,7 +24,36 @@ from time import time
 # Orbitors projectile spritesheet: https://opengameart.org/content/evil-blood-orb-animated
 
     
+
+def main():
     # create and configure root winroot = Tk()
+    global input_handler, main_canvas, root
+    root = Tk()
+    root.attributes("-fullscreen", True)
+    root.resizable(width=False, height=False)
+    WIDTH = root.winfo_screenwidth()
+    HEIGHT = root.winfo_screenheight()
+    SCALE = sqrt((WIDTH*HEIGHT)/(1920*1080))
+
+    window = Window()
+    Window.HEIGHT = HEIGHT
+    Window.WIDTH = WIDTH
+    Window.SCALE = SCALE
+
+        # create and configure canvas
+    main_canvas = Canvas(root, width=WIDTH, height=HEIGHT, bg="white")
+    main_canvas.pack(side="right")
+
+        # initialise input handler
+    input_handler = InputHandler()
+    root.bind("<KeyPress>", input_handler.send_input)
+    root.bind("<KeyRelease>", input_handler.reset_input)
+    root.bind("<Motion>", input_handler.set_mouse_pos)
+
+    root.update()
+    start_game()
+
+
 def start_game():
     global state_manager, window, start_time
     start_time = time()
@@ -47,30 +76,9 @@ def game_loop():
 
         root.update_idletasks()
         root.update()
+if __name__ == "__main__":
+     main()
 
-root = Tk()
-root.attributes("-fullscreen", True)
-root.resizable(width=False, height=False)
-WIDTH = root.winfo_screenwidth()
-HEIGHT = root.winfo_screenheight()
-SCALE = sqrt((WIDTH*HEIGHT)/(1920*1080))
 
-window = Window()
-Window.HEIGHT = HEIGHT
-Window.WIDTH = WIDTH
-Window.SCALE = SCALE
-
-    # create and configure canvas
-main_canvas = Canvas(root, width=WIDTH, height=HEIGHT, bg="white")
-main_canvas.pack(side="right")
-
-    # initialise input handler
-input_handler = InputHandler()
-root.bind("<KeyPress>", input_handler.send_input)
-root.bind("<KeyRelease>", input_handler.reset_input)
-root.bind("<Motion>", input_handler.set_mouse_pos)
-
-root.update()
-start_game()
 
 

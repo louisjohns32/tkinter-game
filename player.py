@@ -8,7 +8,7 @@ from items.laser import Laser
 from items.pinger import Pinger
 from items.shuriken import Shuriken
 from Window import Window
-
+import numpy as np
 
 class Player(GameObject):
 
@@ -33,6 +33,7 @@ class Player(GameObject):
 
     def __init__(self, input_handler, sprite, collision_manager, obj_manager, state_manager):
         Player.instance = self
+        print("PLAYER INIT")
 
         super().__init__(sprite, collision_manager=collision_manager)
         self.input_handler = input_handler
@@ -69,11 +70,10 @@ class Player(GameObject):
     def update(self):
         idle = True
         pos_before = (self.x_pos, self.y_pos)
-
+        x_movement, y_movement = 0,0
         #check input
         if self.input_handler.get_input_action("up"):
-            self.set_position(self.x_pos, self.y_pos-self.speed *
-                        Window.delta_time * 500)
+            y_movement-=1
             idle = False
             if self.facing == "l":
                 self.active_anim = self.walking_left_anim
@@ -85,23 +85,29 @@ class Player(GameObject):
                 self.active_anim = self.walking_left_anim
             else:
                 self.active_anim = self.walking_right_anim
-            self.set_position(self.x_pos, self.y_pos+self.speed *
-                        Window.delta_time * 500)
+            y_movement+=1
             idle = False
 
         if self.input_handler.get_input_action("left"):
-            self.set_position(self.x_pos-self.speed *
-                        Window.delta_time * 500, self.y_pos)
+            x_movement-=1
             self.active_anim = self.walking_left_anim
             self.facing = "l"
             idle = False
 
         if self.input_handler.get_input_action("right"):
-            self.set_position(self.x_pos+self.speed *
-                        Window.delta_time * 500, self.y_pos)
+            x_movement +=1
             self.active_anim = self.walking_right_anim
             idle = False
             self.facing = "r"
+
+        if abs(x_movement) == abs(y_movement) == 1:
+            self.set_position(self.x_pos+(self.speed *
+                        Window.delta_time * 500 * x_movement)/1.414, self.y_pos + (self.speed *
+                        Window.delta_time * 500 * y_movement)/1.414,)
+        else:
+            self.set_position(self.x_pos+(self.speed *
+                        Window.delta_time * 500 )*x_movement, self.y_pos + (self.speed *
+                        Window.delta_time * 500)*y_movement,)
 
         if idle:
             if self.facing == "l":
@@ -118,7 +124,7 @@ class Player(GameObject):
 
         # update animation
         self.active_anim.update()
-        self.sprite = ImageTk.PhotoImage(self.active_anim.get_sprite())
+        self.sprite = self.active_anim.get_sprite()
 
     def take_damage(self, dmg):
         self.health = max(0, self.health-dmg)

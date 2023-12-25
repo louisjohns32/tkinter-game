@@ -30,4 +30,4 @@ class OrbitorProjectile(Projectile):
             self.x_pos + self.player.pos_diff[0], self.y_pos + self.player.pos_diff[1])
         # update animation
         self.animation.update()
-        self.sprite = ImageTk.PhotoImage(self.animation.get_sprite())
+        self.sprite = self.animation.get_sprite()

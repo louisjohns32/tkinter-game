@@ -10,26 +10,9 @@ class PingerProjectile(Projectile):
                          duration, speed, damage, penetrate, target=target)
 
     def update(self):
-        #update projectile position
-        self.set_position(self.x_pos + cos(self.direction) * self.speed * Window.delta_time * 50,
-                    self.y_pos + sin(self.direction) * self.speed * Window.delta_time * 50)
-        
-        #check if durtation has passed
-        if time() > self.start_time + self.duration:
-            self.delete()  
-
-        # check collision with objects
-        collisions = self.player.collision_manager.check_collision_objects(
-            self.x_pos, self.y_pos, self.radius)
-        if type(collisions) != bool:
-            for collision in collisions:
-                if collision.tag == self.target:
-                    if collision not in self.hit_objects:
-                        collision.take_damage(self.damage)
-                        self.penetrate -= 1
-                        self.hit_objects.append(collision)
-                        if self.penetrate < 0:
-                            self.delete()
+        self.move()
+        self.check_duration()
+        self.handle_enemy_collisions()
 
         # Check for collision with screen edge
         collision = self.player.collision_manager.check_collision_screen(
@@ -53,4 +36,6 @@ class PingerProjectile(Projectile):
             else: # collided with horizontal wall
                 self.direction = atan2(-sin(self.direction),
                                         cos(self.direction))
+        
+
 

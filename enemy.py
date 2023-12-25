@@ -1,6 +1,7 @@
 from game_object import GameObject
 from enemy_state_machine.enemy_state_factory import EnemyStateFactory
 from PIL import ImageTk
+from dumb_objects.xp_pickup import XpPickup
 
 
 class Enemy(GameObject):
@@ -71,9 +72,11 @@ class Enemy(GameObject):
 
     def die(self):
         self.health = 0
-        self.current_state.change_state(self.state_factory.dead(self))
+        XpPickup.instance.add_object((self.x_pos,self.y_pos))
+        self.deactivate()
     
     def deactivate(self):
+        self.player.obj_manager.delete_object(self)
         self.available_instances[type(self)].append(self)
 
     def take_damage(self, dmg):
@@ -95,7 +98,7 @@ class Enemy(GameObject):
 
        # animation stuff
         self.active_anim.update()
-        self.sprite = ImageTk.PhotoImage(self.active_anim.get_sprite())
+        self.sprite = self.active_anim.get_sprite()
 
     def save(self): # stores and formats enemy info into save_dict and returns it to be saved
         save_dict = super().save()

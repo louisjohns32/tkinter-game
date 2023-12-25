@@ -17,8 +17,8 @@ class Orbs(BossBaseAttack):
 class BossOrbingState(EnemyBaseState):
     sprite = "assets/projectiles/enemyorb-projectile.png"
     charge_time = 0.5
-    num_projectiles = 40
-    speed = 15
+    num_projectiles = 30
+    speed = 6
     duration = 5
 
     def __init__(self, enemy):

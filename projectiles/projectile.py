@@ -21,12 +21,18 @@ class Projectile(GameObject):
         self.radius = radius # collider radius of object
 
     def update(self):
+        self.move()
+        self.check_duration()
+        
 
-        self.set_position(self.x_pos + math.cos(self.direction) * self.speed * Window.delta_time * 100,
-                    self.y_pos + math.sin(self.direction) * self.speed * Window.delta_time * 100)
-        if time() > self.start_time + self.duration:
-            self.delete()  # TODO Use pooling to reuse object instead of deleting. Much better memory optimisation by using pooling
+        self.handle_enemy_collisions()
+            
 
+    def delete(self):
+
+        self.player.obj_manager.delete_object(self)
+
+    def handle_enemy_collisions(self):
         # check collision
         collisions = self.player.collision_manager.check_collision(
             self.x_pos, self.y_pos, self.radius)
@@ -44,6 +50,18 @@ class Projectile(GameObject):
             if collisions:
                 self.delete()
 
-    def delete(self):
+        # check collisions with dumb enemies
+        collisions = self.player.collision_manager.check_collision_dumb_enemies(self.x_pos, self.y_pos, self.radius)
+        # sort collisions in descending order, so popping from list doesnt affect the index of subsequent collisions
+        collisions = sorted(collisions, key=lambda x:-x[1])
+        
+        for i,j in collisions:
+            self.player.obj_manager.dumb_enemies[i].deal_damage(j, self.damage)
 
-        self.player.obj_manager.delete_object(self)
+    def move(self):
+        self.set_position(self.x_pos + math.cos(self.direction) * self.speed * Window.delta_time * 100,
+                    self.y_pos + math.sin(self.direction) * self.speed * Window.delta_time * 100)
+    
+    def check_duration(self):
+        if time() > self.start_time + self.duration:
+            self.delete()

@@ -6,10 +6,13 @@ from enemies.rat import Rat
 from enemies.flower import Flower
 from enemies.dragon_boss import DragonBoss
 from enemies.boss import Boss
+from enemies.pumpking import Pumpking
 from projectiles.projectile import Projectile
 from projectiles.pinger_projectile import PingerProjectile
 from projectiles.orbitor_projectile import OrbitorProjectile
 from projectiles.laser_projectile import LaserProjectile
+from dumb_objects.xp_pickup import XpPickup
+
 
 
 class ObjectManager:
@@ -36,6 +39,9 @@ class ObjectManager:
             self.game_objects.append(i)
         # set references
         self.collision_manager = collision_manager
+
+        self.dumb_objects = [XpPickup()]
+        self.dumb_enemies = [Slime(), Skeleton(), Rat(), Flower(), Pumpking()]
 
     def new_object(self, obj,front=False):
         if front:

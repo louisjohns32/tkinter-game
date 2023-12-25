@@ -25,6 +25,6 @@ class DragonPhase1State(EnemyBaseState):
 
     def check_switch_states(self):
         # check for phase2 switch
-        if self.enemy.health < 490:
+        if self.enemy.health < 300:
            self.change_state(self.enemy.state_factory.phase2(self.enemy))
         pass

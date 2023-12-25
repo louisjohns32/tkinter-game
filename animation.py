@@ -3,7 +3,7 @@ import time as Time
 from Window import Window
 
 class Animation:
-    def __init__(self, spritesheet_path: str, res: tuple, sprites: int, time=50, scale=1, mirror=False, start=0, end=-1, rotation=0, spin=False):
+    def __init__(self, spritesheet_path: str, res: tuple, num_sprites: int, time=50, scale=1, mirror=False, start=0, rotation=0, spin=False):
         # add scaling based off window size
         scale *= Window.SCALE
         print(f"Initing animation with path {spritesheet_path}")
@@ -15,23 +15,25 @@ class Animation:
             res[0]  # number of sprites on top row
         if spin:
             # store rotated sprites in sprites
-            for i in range(sprites-1): 
-                self.sprites.append(self.spritesheet.rotate((i * 360)/sprites))
+            for i in range(num_sprites-1): 
+                self.sprites.append(self.spritesheet.rotate((i * 360)/num_sprites))
         else:
             # go through spritesheet, cropping individual sprites and adding them to sprites list
-            for i in range(sprites):
+            for i in range(start,start+num_sprites):
+                
                 x = (i % sprites_top) * res[0]
                 y = (i//sprites_top) * res[1]
                 if mirror:
-                    self.sprites.append(self.spritesheet.crop((x, y, x+res[0], y+res[1])).resize(
-                        (int(res[0]*scale), int(res[1]*scale)), resample=Image.NEAREST).transpose(Image.FLIP_LEFT_RIGHT))
+                    self.sprites.append(ImageTk.PhotoImage(self.spritesheet.crop((x, y, x+res[0], y+res[1])).resize(
+                        (int(res[0]*scale), int(res[1]*scale)), resample=Image.NEAREST).transpose(Image.FLIP_LEFT_RIGHT)))
 
                 else:
-                    self.sprites.append(self.spritesheet.crop((x, y, x+res[0], y+res[1])).resize(
-                        (int(res[0]*scale), int(res[1]*scale)), resample=Image.NEAREST).rotate(rotation, expand=1))
-            if end != -1:
-                # TODO this could be done better, but i just rushed this solution
-                self.sprites = self.sprites[start:end]
+                    self.sprites.append(ImageTk.PhotoImage(self.spritesheet.crop((x, y, x+res[0], y+res[1])).resize(
+                        (int(res[0]*scale), int(res[1]*scale)), resample=Image.NEAREST).rotate(rotation, expand=1)))
+           # if start != 0:
+             #   print(f"sprites before: {self.sprites}")
+         #       self.sprites = self.sprites[start:start+num_sprites]
+               # print(f"sprites:{self.sprites}")
 
         self.time = time/1000  # ms -> s
         self.current_sprite = 0

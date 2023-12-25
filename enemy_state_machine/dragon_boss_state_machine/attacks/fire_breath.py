@@ -1,7 +1,7 @@
 from enemy_state_machine.boss_state_machine.attacks.boss_base_attack import BossBaseAttack
 from time import time
 from enemy_state_machine.enemy_base_state import EnemyBaseState
-from math import atan2, sqrt, radians
+from math import atan2, sqrt, radians, pi
 from game_object import GameObject
 from animation import Animation
 from PIL import ImageTk
@@ -21,26 +21,28 @@ class FireBreath(BossBaseAttack):
 
 class FireBreathState(EnemyBaseState):
     duration = 3
-    spread = 40  # breath spread in degrees
+    spread = radians(50)  # breath spread in degrees
     breath_distance = 400  # breath distance
     damage = 100
 
     def enter_state(self):
         self.start_time = time()
+        print(radians(270))
 
         (self.enemy.facing)
-        if self.enemy.facing == "left":
-            pos = (self.enemy.x_pos - 226 * Window.SCALE, self.enemy.y_pos)
-            self.direction = radians(180)
-        elif self.enemy.facing == "right":
-            pos = (self.enemy.x_pos + 226 * Window.SCALE, self.enemy.y_pos)
-            self.direction = radians(0)
-        elif self.enemy.facing == "up":
-            pos = (self.enemy.x_pos, self.enemy.y_pos-160*Window.SCALE)
-            self.direction = radians(90)
-        else:
-            pos = (self.enemy.x_pos, self.enemy.y_pos+160*Window.SCALE)
-            self.direction = radians(270)
+        match self.enemy.facing:
+            case"left":
+                pos = (self.enemy.x_pos - 226 * Window.SCALE, self.enemy.y_pos)
+                self.direction = radians(180)
+            case "right":
+                pos = (self.enemy.x_pos + 226 * Window.SCALE, self.enemy.y_pos)
+                self.direction = radians(0)
+            case "up":
+                pos = (self.enemy.x_pos, self.enemy.y_pos-160*Window.SCALE)
+                self.direction = radians(90)
+            case "down":
+                pos = (self.enemy.x_pos, self.enemy.y_pos+160*Window.SCALE)
+                self.direction = 2*pi - radians(270)
 
         self.projectile = FireBreathProjectile(
             "", pos=pos, dir=self.enemy.facing)
@@ -49,9 +51,10 @@ class FireBreathState(EnemyBaseState):
     def update_state(self):
         # TODO maybe move into collision manager?
         player_pos = self.enemy.player.x_pos, self.enemy.player.y_pos
-        angle_toplayer = atan2(
+        angle_to_player = atan2(
             player_pos[1] - self.enemy.y_pos, player_pos[0] - self.enemy.x_pos)
-        if abs(self.direction - angle_toplayer) < self.spread/2:
+        print(f"Breath dir:{self.direction}, player dir: {angle_to_player}")
+        if abs(self.direction - angle_to_player) < self.spread/2:
             player_distance = sqrt(
                 (player_pos[0] - self.enemy.x_pos)**2 + (player_pos[1] - self.enemy.y_pos)**2)
             if player_distance <= self.breath_distance * Window.SCALE:
@@ -84,4 +87,4 @@ class FireBreathProjectile(GameObject):
 
     def update(self):
         self.active_anim.update()
-        self.sprite = ImageTk.PhotoImage(self.active_anim.get_sprite())
+        self.sprite = self.active_anim.get_sprite()
