@@ -10,6 +10,7 @@ class EnemyDumb(DumbObject):
     # overwriteable constant stats
     MAX_HEALTH = 10
     SPEED = 1
+    RADIUS = 32
 
     # animations every dumb enemy should have
     move_l_anim_args = []
@@ -63,7 +64,9 @@ class EnemyDumb(DumbObject):
         self.obj_list[index]["health"] -= damage
         if self.obj_list[index]["health"] <= 0:
             Player.instance.obj_manager.dumb_objects[0].add_object((self.obj_list[index]["position"]))    # TODO URGENT!!!! CHANGE THIS 
-            self.obj_list.pop(index)
+            self.obj_list.pop(index)#
+
+  
             
 
 

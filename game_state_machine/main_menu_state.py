@@ -53,7 +53,7 @@ class MainMenuState(GameBaseState):
         for i, btn in enumerate(self.options):
             if i == self.selected_option:
                 canvas.create_text(
-                    200, 800 + i*50, text=btn[0],  fill="blue", font=("Arial", 50), tag="del")
+                    200 * Window.SCALE, (800 + i*50)*Window.SCALE, text=btn[0],  fill="blue", font=("Arial", int(50*Window.SCALE)), tag="del")
             else:
                 canvas.create_text(
-                    200, 800 + i * 50, text=btn[0],  fill="black", font=("Arial", 20), tag="del")
+                    200 * Window.SCALE, (800 + i * 50)*Window.SCALE, text=btn[0],  fill="black", font=("Arial", int(20*Window.SCALE)), tag="del")

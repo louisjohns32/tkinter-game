@@ -49,6 +49,8 @@ class PlayingState(GameBaseState):
         self.collision_manager.update()
         self.camera.update()
 
+        self.obj_manager.handle_collision()
+
         self.render()
 
         # cheatcodes

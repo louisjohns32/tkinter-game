@@ -12,10 +12,13 @@ from projectiles.pinger_projectile import PingerProjectile
 from projectiles.orbitor_projectile import OrbitorProjectile
 from projectiles.laser_projectile import LaserProjectile
 from dumb_objects.xp_pickup import XpPickup
+from math import sqrt, atan2, sin, cos
 
 
 
 class ObjectManager:
+
+    instance = None
 
     object_map = {
         "Player": Player,
@@ -33,6 +36,7 @@ class ObjectManager:
     }
 
     def __init__(self, collision_manager, objects=[]):
+        ObjectManager.instance = self
         self.game_objects = []
         # add current objects passed in
         for i in objects:
@@ -68,3 +72,26 @@ class ObjectManager:
         for obj in self.game_objects:
             if obj.tag == "enemy":
                 obj.die()
+
+    def handle_collision(self):
+        obj_list = []
+        for i in self.dumb_enemies: # TODO optimise so obj list doesnt have to be generated every frame
+            obj_list+=(i.obj_list)
+
+        for enemy in obj_list:
+            for collision_enemy in obj_list:
+                # check overlap
+                distance = sqrt((enemy["position"][0] - collision_enemy["position"][0])**2
+                           + (enemy["position"][1] - collision_enemy["position"][1])**2)
+                
+                overlap = 32 - distance
+                if overlap > 0:
+                    # resolve collision
+                    direction = atan2(collision_enemy["position"][1] - enemy["position"][1],
+                                      collision_enemy["position"][0] - enemy["position"][0], )
+                    
+                    enemy["position"] = (enemy["position"][0] - cos(direction),
+                                        enemy["position"][1] - sin(direction) )   
+                    collision_enemy["position"] = (collision_enemy["position"][0] + cos(direction),
+                                        collision_enemy["position"][1] + sin(direction) ) 
+                                

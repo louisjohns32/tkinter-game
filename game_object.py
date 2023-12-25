@@ -9,6 +9,7 @@ class GameObject:  # Should this be abstract?
     tag = ""
     type = "GameObject"
 
+
     def __init__(self, sprite, collision_manager=None, pos=(0, 0)):
         self.sprite = sprite
         self.x_pos, self.y_pos = pos

@@ -1,14 +1,22 @@
 from game_state_machine.game_base_state import GameBaseState
-from PIL import ImageTk
+from PIL import ImageTk, Image
 from time import time
 from game_state_machine.boss_state import BossState
+from Window import Window
 
 class PausedState(GameBaseState):
 
-    def initialise_state(self):
-        self.btn_highlighted = ImageTk.PhotoImage(
-            file="assets/buttonHighLight.png")
-        self.btn_normal = ImageTk.PhotoImage(file="assets/buttonNormal.png")
+    def initialise_state(self): # TODO resize
+        self.btn_highlighted = ( 
+            Image.open("assets/buttonHighLight.png"))
+        self.btn_highlighted = ImageTk.PhotoImage(self.btn_highlighted.resize((
+            int(self.btn_highlighted.width*Window.SCALE),int(self.btn_highlighted.height*Window.SCALE))))
+
+        self.btn_normal = ( 
+            Image.open("assets/buttonNormal.png"))
+        self.btn_normal = ImageTk.PhotoImage(self.btn_normal.resize((
+            int(self.btn_normal.width*Window.SCALE),int(self.btn_normal.height*Window.SCALE))))
+        
 
     def enter_state(self):
         self.selected_option = 0
@@ -44,11 +52,11 @@ class PausedState(GameBaseState):
         for i, btn in enumerate(self.buttons):
             if i == self.selected_option:
                 self.state_manager.main_canvas.create_image(
-                    950, 600 + i*150, image=self.btn_highlighted, tag="del")
+                    950*Window.SCALE, (600 + i*150)*Window.SCALE, image=self.btn_highlighted, tag="del")
                 self.state_manager.main_canvas.create_text(
-                    950, 605 + i*150, text=btn[0], font="Arial, 30", tag="del", fill="white")
+                    950*Window.SCALE, (605 + i*150)*Window.SCALE, text=btn[0], font=("Arial", int(30*Window.SCALE)), tag="del", fill="white")
             else:
                 self.state_manager.main_canvas.create_image(
-                    950, 600 + i*150, image=self.btn_normal, tag="del")
+                    950*Window.SCALE, (600 + i*150)*Window.SCALE, image=self.btn_normal, tag="del")
                 self.state_manager.main_canvas.create_text(
-                    950, 605 + i*150, text=btn[0], font="Arial, 30", tag="del", fill="white")
+                    950*Window.SCALE, (605 + i*150)*Window.SCALE, text=btn[0], font=("Arial", int(30*Window.SCALE)), tag="del", fill="white")
