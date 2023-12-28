@@ -10,6 +10,7 @@ import math
 from game_object import GameObject
 from Window import Window
 from enemy_dumb import EnemyDumb
+from talkable_npc import TalkableNPC
 
 
 class PlayingState(GameBaseState):
@@ -27,6 +28,9 @@ class PlayingState(GameBaseState):
         self.change_sub_state(self.state_manager.WAVES)
         print("SCORE RESET")
         self.player_score = 0
+
+        self.obj_manager.new_object(TalkableNPC(ImageTk.PhotoImage
+                             (file="cowboy.png"), pos=(1100,1000)))
 
     def enter_state(self):
         self.start_time = time()
@@ -85,6 +89,12 @@ class PlayingState(GameBaseState):
                 y+= player_tile[1] - 5
                 self.state_manager.main_canvas.create_image(x*self.state_manager.map_manager.TILE_SIZE-self.camera.x_pos + 8*self.state_manager.map_manager.TILE_SIZE,
                                                         y * self.state_manager.map_manager.TILE_SIZE - self.camera.y_pos + 5*self.state_manager.map_manager.TILE_SIZE, image=self.state_manager.map_manager.TEXTURE_MAP[self.state_manager.map_manager.MAP_ARRAY[x][y]])
+    
+        # draw dumb objects
+        for obj in self.obj_manager.dumb_objects + self.obj_manager.dumb_enemies:
+            obj.draw_to_screen(self.state_manager.main_canvas)
+        
+        
         # draw game objects
         for obj in self.obj_manager.game_objects:
 
@@ -116,9 +126,7 @@ class PlayingState(GameBaseState):
             # draw sprite if on screen
             obj.draw_to_screen((x,y),self.state_manager.main_canvas)
         
-        # draw dumb objects
-        for obj in self.obj_manager.dumb_objects + self.obj_manager.dumb_enemies:
-            obj.draw_to_screen(self.state_manager.main_canvas)
+        
 
         # Render healthbar
         self.state_manager.main_canvas.create_rectangle(

@@ -40,8 +40,8 @@ class Player(GameObject):
         self.obj_manager = obj_manager
         self.leveled = False
         self.state_manager = state_manager
-        self.x_pos = 2000
-        self.y_pos = 2000
+        self.x_pos = 1000
+        self.y_pos = 1000
 
         # STATS
         self.health = self.max_health

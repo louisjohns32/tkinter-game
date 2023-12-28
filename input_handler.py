@@ -3,6 +3,8 @@ import json
 
 
 class InputHandler(object):
+    instance = None
+
     # keysymbol -> bool : true if down, false otherwise
     input_dict = {i: False for i in ascii_lowercase}
     input_dict["space"] = False
@@ -23,6 +25,8 @@ class InputHandler(object):
     }
 
     def __init__(self):
+        InputHandler.instance = self
+
         # load input dict
         with open("binds.json", "r") as file:
             binds_dict = json.load(file)

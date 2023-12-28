@@ -1,0 +1,1 @@
+{"meta": {"time": 1703775841.070113}, "player": {"position": [582.9005639320384, 1061.3780274586763], "type": "Player", "collidable": true, "health": 200, "level": 0, "xp": 0, "items": {"Wand": 1}}, "score": 0, "spawner": {"start_time": 1703775838.211698, "wave": 0, "multiplier": 1}, "objects": [{"position": [1100, 1000], "type": "GameObject", "collidable": false}]}
