@@ -12,6 +12,8 @@ from game_state_machine.loading_game_state import LoadingGameState
 from game_state_machine.options_state import OptionsState
 from game_state_machine.changing_bind_state import ChangingBindState
 from game_state_machine.boss_key_state import BossKeyState
+from game_state_machine.dialogue_state import DialogueState
+from game_state_machine.shop_state import ShopState
 from time import time
 
 
@@ -36,6 +38,8 @@ class GameStateManager:
         self.OPTIONS = OptionsState(self)
         self.CHANGINGBIND = ChangingBindState(self)
         self.BOSSKEY = BossKeyState(self)
+        self.DIALOGUE = DialogueState(self)
+        self.SHOP = ShopState(self)
 
         self.current_state = self.MAINMENU
 
@@ -53,6 +57,8 @@ class GameStateManager:
         self.OPTIONS.initialise_state()
         self.CHANGINGBIND.initialise_state()
         self.BOSSKEY.initialise_state()
+        self.DIALOGUE.initialise_state()
+        self.SHOP.initialise_state()
 
         self.current_state.enter_state()
 

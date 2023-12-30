@@ -1,9 +1,12 @@
 from interactable import Interactable
 from player import Player
+from animation import Animation
 
 
 class TalkableNPC(Interactable):
-    idle_anim_args = ...
+    idle_anim_args = None
+    idle_anim_kwargs = None
+
 
     dialogue_tree ={"text":"Hey there!", "next":None}
     dialogue_active = False
@@ -11,6 +14,8 @@ class TalkableNPC(Interactable):
     def __init__(self, sprite, collision_manager=None, pos=...):
         super().__init__(sprite, collision_manager, pos)
         self.current_dialogue = self.dialogue_tree
+        self.idle_anim = Animation(*self.idle_anim_args, **self.idle_anim_kwargs)
+
 
     def on_interact(self):
         # show dialogue
@@ -25,6 +30,9 @@ class TalkableNPC(Interactable):
             if (Player.instance.x_pos - self.x_pos)**2 + \
             (Player.instance.y_pos - self.y_pos)**2 >= self.prompt_range**2:
                 self.dialogue_active = False
+
+        self.idle_anim.update()
+        self.sprite = self.idle_anim.get_sprite()
         
 
     def draw_to_screen(self, pos, canvas):

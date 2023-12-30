@@ -10,7 +10,7 @@ import math
 from game_object import GameObject
 from Window import Window
 from enemy_dumb import EnemyDumb
-from talkable_npc import TalkableNPC
+from merchant import Merchant
 
 
 class PlayingState(GameBaseState):
@@ -29,8 +29,8 @@ class PlayingState(GameBaseState):
         print("SCORE RESET")
         self.player_score = 0
 
-        self.obj_manager.new_object(TalkableNPC(ImageTk.PhotoImage
-                             (file="cowboy.png"), pos=(1100,1000)))
+        # self.obj_manager.new_object(Merchant(ImageTk.PhotoImage
+         #                   (file="cowboy.png"), pos=(1100,1000)))
 
     def enter_state(self):
         self.start_time = time()

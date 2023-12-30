@@ -33,7 +33,6 @@ class Player(GameObject):
 
     def __init__(self, input_handler, sprite, collision_manager, obj_manager, state_manager):
         Player.instance = self
-        print("PLAYER INIT")
 
         super().__init__(sprite, collision_manager=collision_manager)
         self.input_handler = input_handler

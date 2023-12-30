@@ -47,14 +47,14 @@ class GameBaseState(ABC):
         if self.sub_state:
             self.sub_state.update_states()
 
-    def change_state(self, state):
+    def change_state(self, state, *args):
         self.state_manager.previous_state = self
         if self.super_state == None:
             if self.state_manager.current_state != state:
                 print(f"changing state to {type(state)}")
                 self.state_manager.current_state.exit_state()
                 self.state_manager.current_state = state
-                state.enter_state()
+                state.enter_state(*args)
             else:
                 print("State already active")
         else:
