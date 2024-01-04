@@ -9,6 +9,8 @@ from items.pinger import Pinger
 from items.shuriken import Shuriken
 from Window import Window
 import numpy as np
+from items.item_manager import ItemManager
+
 
 class Player(GameObject):
 
@@ -28,8 +30,10 @@ class Player(GameObject):
    
 
     # TODO i could store this in a json? or come up with better way of loading items without the need for this
-    items_map = {"Pinger": Pinger, "Wand": Wand,
+    items_mape = {"Pinger": Pinger, "Wand": Wand,
                  "Shotgun": Shotgun, "Orbitors": Orbitors, "Laser": Laser, "Shuriken" : Shuriken}
+    
+    items_map = {Pinger : None, Wand:None, Shotgun:None, Orbitors:None, Laser:None, Shuriken:None}
 
     def __init__(self, input_handler, sprite, collision_manager, obj_manager, state_manager):
         Player.instance = self
@@ -39,8 +43,8 @@ class Player(GameObject):
         self.obj_manager = obj_manager
         self.leveled = False
         self.state_manager = state_manager
-        self.x_pos = 1000
-        self.y_pos = 1000
+        self.x_pos = 18000
+        self.y_pos = 18000
 
         # STATS
         self.health = self.max_health
@@ -48,8 +52,10 @@ class Player(GameObject):
         self. xp = 0
         self.max_xp = int(5 + self.level * 1.5)
 
+        ItemManager.load_item_sprites()
         self.items = []
         self.items.append(Wand(self))
+        self.items_map[Wand] = self.items[0]
 
          # ANIMATIONS
         self.facing = "r"  # r for right, l for left
@@ -146,17 +152,18 @@ class Player(GameObject):
                 return item
 
         else:  # Else, add item to items
-            (f"Item type: {itemType}")
             self.items.append(itemType(self))
+            self.items_map[itemType] = self.items[-1]
             return self.items[-1]
 
     def level_up(self):
-        self.level += 1
-        # carry over additional xp
-        self.xp = self.xp % int(self.max_xp)
-        # update max_xp
-        self.max_xp = 5 + self.level * 1.5
-        self.leveled = True
+        pass
+        #self.level += 1
+        ## carry over additional xp
+        #self.xp = self.xp % int(self.max_xp)
+        ## update max_xp
+        #self.max_xp = 5 + self.level * 1.5
+        #self.leveled = True
 
     def save(self):
         save_dict = super().save()

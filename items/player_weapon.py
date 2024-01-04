@@ -17,6 +17,8 @@ class PlayerWeapon(PlayerItem):
     speed = 1
     projectiles = 1  # number of projectiles
 
+    price = 5
+
     last_shot = 0
 
     def __init__(self, player):
@@ -66,5 +68,7 @@ class PlayerWeapon(PlayerItem):
                     self.speed = self.level_map[self.level][attribute]
                 elif attribute == "DURATION":
                     self.duration = self.level_map[self.level][attribute]
+                elif attribute == "PRICE":
+                    self.price = self.level_map[self.level][attribute]
         except:
             pass

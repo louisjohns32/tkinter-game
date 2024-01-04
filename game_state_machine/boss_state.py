@@ -31,8 +31,8 @@ class BossState(GameBaseState):
         pass
 
     def boss_dead(self):
-        self.change_state(self.state_manager.WAVES)
-        self.state_manager.PLAYING.enemy_spawner.nextWave()
+        self.super_state.change_sub_state(None)
+       # self.state_manager.PLAYING.enemy_spawner.nextWave()
 
     def set_boss_ref(self, boss):  # set boss reference
         self.boss = boss

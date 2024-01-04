@@ -11,15 +11,16 @@ class Wand(PlayerWeapon):
     penetrate = 5
 
     name = "Wand"
+    text = "Fires magic projectile"
 
     
 
     level_map = {
-        2: {"PROJECTILES" : 2}, 
-        3: {"DAMAGE" : 15}, 
-        4: {"PROJECTILES" : 3, "SPEED" : 10, "COOLDOWN" : 2}, 
-        5: {"PENETRATE" : 10}, 
-        6: {"PROJECTILES" : 4}, 
+        2: {"PROJECTILES" : 2, "PRICE" : 7}, 
+        3: {"DAMAGE" : 15, "PRICE" :10}, 
+        4: {"PROJECTILES" : 3, "SPEED" : 10, "COOLDOWN" : 2, "PRICE" : 15}, 
+        5: {"PENETRATE" : 10, "PRICE" : 20}, 
+        6: {"PROJECTILES" : 4, "PRICE" : 30}, 
         7: {"DAMAGE" : 20}, 
         8: {"PROJECTILES" : 5}, 
         9: {"COOLDOWN" : 1}, 

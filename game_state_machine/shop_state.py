@@ -4,6 +4,7 @@ from time import time
 from game_state_machine.boss_state import BossState
 from Window import Window
 from items.item_manager import ItemManager
+from player import Player
 
 
 class ShopState(GameBaseState):
@@ -38,7 +39,21 @@ class ShopState(GameBaseState):
                 self.change_state(self.state_manager.PLAYING)
             else:
                 # check if player already has item, if they do upgrade the weapon, otherwise give them the weapon
-                pass
+                player_has_item = False
+                for item in Player.instance.items:
+                    if type(item) == ItemManager.items_id_dict[self.items[self.selected_item]]:
+                        player_has_item = True
+                        if Player.instance.xp >= item.price:
+                            Player.instance.xp -= item.price
+                            item.level_up()
+                        break
+                
+                if not player_has_item:
+                    if ItemManager.items_id_dict[self.items[self.selected_item]].price <= Player.instance.xp:
+                        Player.instance.addItem(ItemManager.items_id_dict[self.items[self.selected_item]])
+                        Player.instance.xp -= ItemManager.items_id_dict[self.items[self.selected_item]].price
+                
+               
 
         self.render()
 
@@ -54,15 +69,30 @@ class ShopState(GameBaseState):
         # render background
         self.state_manager.main_canvas.create_rectangle(Window.WIDTH/8, Window.HEIGHT/8, 7*Window.WIDTH/8, 7*Window.HEIGHT/8, fill="darkgoldenrod")
 
+        # render player gold
+        self.state_manager.main_canvas.create_text(Window.WIDTH/8 + 20, 7*Window.HEIGHT/8 -20, text=Player.instance.xp, font=("Arial", 30))
+
         for i,item in enumerate(self.items):
             kwargs = {"fill":"sandybrown"}
             if i == self.selected_item:
                 kwargs["outline"] = "white"
                 kwargs["width"] = 10
+
                 
             self.state_manager.main_canvas.create_rectangle((Window.WIDTH/4)*(i+1)-150, Window.HEIGHT/4, (Window.WIDTH/4)*(i+1)+150, 3*Window.HEIGHT/4, **kwargs, tag="del")    
-            #self.state_manager.main_canvas.create_image(...)
-            self.state_manager.main_canvas.create_text((Window.WIDTH/4)*(i+1),Window.HEIGHT/2, text=ItemManager.items_id_dict[item].name)
+
+            if Player.instance.items_map[ItemManager.items_id_dict[item]]:
+                item_ref = Player.instance.items_map[ItemManager.items_id_dict[item]]
+            else:
+                item_ref = ItemManager.items_id_dict[item]
+
+            print(item_ref.icon_sprite)
+            self.state_manager.main_canvas.create_image((Window.WIDTH/4)*(i+1),Window.HEIGHT/2-100 * Window.SCALE,image=item_ref.icon_sprite)
+
+            self.state_manager.main_canvas.create_text((Window.WIDTH/4)*(i+1),Window.HEIGHT/2, text=item_ref.name)
+            self.state_manager.main_canvas.create_text((Window.WIDTH/4)*(i+1),Window.HEIGHT/2 + 30, text=item_ref.price)
+            self.state_manager.main_canvas.create_text((Window.WIDTH/4)*(i+1),Window.HEIGHT/2 + 60, text=item_ref.text)
+
 
         # draw exit button
         kwargs = {}

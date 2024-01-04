@@ -11,12 +11,12 @@ from game_object import GameObject
 from Window import Window
 from enemy_dumb import EnemyDumb
 from merchant import Merchant
+from spawn_point import SpawnPoint
 
 
 class PlayingState(GameBaseState):
     # Not using init as this is called when the state is reset, instead of a new instance being used
     def initialise_state(self):
-        print("initialising playing state")
         self.camera = Camera()
         self.collision_manager = collision_manager(
             self.state_manager.map_manager.MAP_ARRAY, self.state_manager.map_manager.TILE_SIZE, self.state_manager)
@@ -26,11 +26,13 @@ class PlayingState(GameBaseState):
         self.enemy_spawner = enemy_spawner(time(), self.obj_manager, self.player)
         self.obj_manager.new_object(self.player)
         self.change_sub_state(self.state_manager.WAVES)
-        print("SCORE RESET")
         self.player_score = 0
 
-        # self.obj_manager.new_object(Merchant(ImageTk.PhotoImage
-         #                   (file="cowboy.png"), pos=(1100,1000)))
+        self.obj_manager.new_object(Merchant(ImageTk.PhotoImage
+                            (file="cowboy.png"), pos=(18000,18000)))
+        
+        self.obj_manager.new_object(SpawnPoint(ImageTk.PhotoImage
+                            (file="map.png"), pos=(19000,18000)))
 
     def enter_state(self):
         self.start_time = time()
@@ -83,10 +85,11 @@ class PlayingState(GameBaseState):
         # draw tile map
         player_tile = (int(self.camera.x_pos // self.state_manager.map_manager.TILE_SIZE),
                         int(self.camera.y_pos//self.state_manager.map_manager.TILE_SIZE))
-        for x, tile_row in enumerate(self.state_manager.map_manager.MAP_ARRAY[player_tile[0]-8:player_tile[0]+9]):
-            x+= player_tile[0] - 8
-            for y, tile in enumerate(tile_row[player_tile[1]-5:player_tile[1]+5]):
-                y+= player_tile[1] - 5
+        
+        for x, tile_row in enumerate(self.state_manager.map_manager.MAP_ARRAY[max(0,player_tile[0]-8):player_tile[0]+9]):
+            x+= max(0,player_tile[0] - 8)
+            for y, tile in enumerate(tile_row[max(0,player_tile[1]-5):player_tile[1]+5]):
+                y+= max(0,player_tile[1] - 5)
                 self.state_manager.main_canvas.create_image(x*self.state_manager.map_manager.TILE_SIZE-self.camera.x_pos + 8*self.state_manager.map_manager.TILE_SIZE,
                                                         y * self.state_manager.map_manager.TILE_SIZE - self.camera.y_pos + 5*self.state_manager.map_manager.TILE_SIZE, image=self.state_manager.map_manager.TEXTURE_MAP[self.state_manager.map_manager.MAP_ARRAY[x][y]])
     

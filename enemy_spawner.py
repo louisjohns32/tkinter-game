@@ -39,7 +39,7 @@ class enemy_spawner:
                   23: {},
                   "boss": {Boss: 1}
                   }
-   # wave_1_map = {10: {Slime:20},1 : {Slime : 30},2:{}, 3:{} ,"boss" : {DragonBoss : 1}}
+    #wave_1_map = {10: {Slime:20},1 : {Slime : 30},2:{}, 3:{} ,"boss" : {DragonBoss : 1}}
 
     wave_2_map = {
         0: {},
@@ -65,9 +65,9 @@ class enemy_spawner:
     def update(self):
         
         try:
-            for enemy in self.spawn_map[self.wave][(time.time()-self.start_time)//5]:
+            for enemy in self.spawn_map[self.wave][(time.time()-self.start_time)//4]:
                 # loop for how many enemies need to be spawned
-                for _ in range(int(self.spawn_map[self.wave][(time.time()-self.start_time)//5][enemy] * self.enemy_multiplier)):
+                for _ in range(int(self.spawn_map[self.wave][(time.time()-self.start_time)//4][enemy] * self.enemy_multiplier)):
                     # pick random angle to spawn at
                     angle = rand.randint(0, 360)
                     # set spawn pos based off angle
@@ -76,7 +76,7 @@ class enemy_spawner:
                     # create enemy object
                     enemy.instance.add_object((x,y))
             
-            self.spawn_map[self.wave][(time.time()-self.start_time)//5] = {}
+            self.spawn_map[self.wave][(time.time()-self.start_time)//4] = {}
         except Exception as e:
             print(f"ERROR: {e}")
             # Spawn boss
@@ -101,6 +101,7 @@ class enemy_spawner:
         self.wave += 1
         self.start_time = time.time()
         # CHECK IF END OF WAVES,
+        print(self.wave)
         if self.wave >= len(self.spawn_map):
             # CHANGE TO NEGATIVETRAITSTATE TO PICK NEGATIVE TRAIT
             self.enemy_multiplier += 2
